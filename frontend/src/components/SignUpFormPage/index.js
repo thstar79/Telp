@@ -7,7 +7,9 @@ function SignupFormPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [first_name, setFirstname] = useState("");
+  const [last_name, setLastname] = useState("");
+  const [zip_code, setZipcode] = useState();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -18,7 +20,7 @@ function SignupFormPage() {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors([]);
-      return dispatch(sessionActions.signup({ email, username, password }))
+      return dispatch(sessionActions.signup({ first_name, last_name, email, password, zip_code }))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
@@ -42,11 +44,30 @@ function SignupFormPage() {
         />
       </label>
       <label>
-        Username
+        First Name
         <input
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={first_name}
+          onChange={(e) => setFirstname(e.target.value)}
+          required
+        />
+      </label>
+      <label>
+        Last Name
+        <input
+          type="text"
+          value={last_name}
+          onChange={(e) => setLastname(e.target.value)}
+          required
+        />
+      </label>
+      <label>
+        Zip Code
+        <input
+          type="text"
+          pattern="(^\d{5}$)"
+          value={zip_code}
+          onChange={(e) => setZipcode(e.target.value)}
           required
         />
       </label>

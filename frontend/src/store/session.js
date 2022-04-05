@@ -33,7 +33,7 @@ export const login = (user) => async (dispatch) => {
 const initialState = {user: null};
 
 export const signup = (user) => async (dispatch) => {
-    const {first_name, last_name, email,password, zip_code} = user;
+    const {first_name, last_name, email, password, zip_code} = user;
     const response = await csrfFetch('/api/users',{
         method: "POST",
         body: JSON.stringify({
