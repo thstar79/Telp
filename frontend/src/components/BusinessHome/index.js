@@ -52,9 +52,6 @@ const BusinessHome = ()=>{
               );
             })}
           </nav>
-          <Route path="/business/:businessId">
-            <BusinessDetail />
-          </Route>
         </>
     );
 }

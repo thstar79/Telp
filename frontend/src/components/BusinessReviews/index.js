@@ -1,23 +1,45 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {delDBReview, getAllReviews} from "../../store/reviews";
+import {delDBReview, editDBReview, getAllReviews} from "../../store/reviews";
 
 const BusinessReviews = ({business, setEditReviewId}) => {
-    const reviews = useSelector((state)=>{
-        console.log(business.reviews,'^^^^^^^^^^^^^^^');
+    const user = useSelector((state)=>state.session.user);
+    let reviews = useSelector((state)=>{
+        console.log(business,"REVIEWS");
         if(!business.reviews) return null;
         return business.reviews.map((reviewId)=>state.reviews[reviewId]);
     });
+    const [rating, setRating] = useState(5);
+    const [contents,setContents] = useState("Write a review");
+    console.log(business,"REVIEWS");
     const dispatch = useDispatch();
+    const updateRating = (e)=>setRating(e.target.value);
+    const updateContents = (e, review)=>{
+        console.log("contents 바꿀래요", e.target.value);
+        review.contents = e.target.value;
+    }
+
     useEffect(()=>{
         dispatch(getAllReviews(business.id));
     },[business.id,dispatch]);
 
-    console.log(reviews, "============================");
     if(!reviews) return null;
-
-    const deleteReview = async (item) => {
-        dispatch(delDBReview(item));
+    
+    // let component1 = 
+    
+    const editReview = async (review) => {
+        console.log("고치실래요?", review.id);
+        const inputboxes = document.getElementsByClassName(`reviewForm${review.id}`);
+        for(let i=0;i<inputboxes.length;++i){
+            const inputbox = inputboxes[i];
+            inputbox.style={};
+            inputbox.disabled = false; 
+        }
+        //dispatch(editDBReview(review));
+    }
+    const deleteReview = async (review) => {
+        console.log("지우실래요? ", review.id )
+        dispatch(delDBReview(review));
     }
 
     return reviews.map((review)=>(
@@ -29,19 +51,32 @@ const BusinessReviews = ({business, setEditReviewId}) => {
                     src={`${review.image}`}
                 />
             </td> */}
-            <td>{review.contents}</td>
-            <td>{review.userId}</td>
-            <td>{review.rating}</td>
-            {/* {business.owned && (
+            <td>
+                <input class={`reviewForm${review.id}`} 
+                    value={review.contents} 
+                    onChange={(e)=>updateContents(e,review)}
+                    style={{ border: "none", backgroundColor: "transparent"}} />
+            </td>
+            <td>
+                <input class={`reviewForm${review.id}`} 
+                    value={review.userId} 
+                    style={{ border: "none", backgroundColor: "transparent"}} disabled />
+            </td>
+            <td>
+                <input class={`reviewForm${review.id}`} 
+                    value={review.rating} 
+                    style={{ border: "none", backgroundColor: "transparent"}} disabled />
+            </td>
+            {(review.userId === user.id)  && (
                 <td>
-                    <button onClick={()=>setEditReviewId(review.id)}>Edit</button>
+                    <button onClick={()=>editReview(review)}>Edit</button>
                 </td>
             )}
-            {business.owned && (
+            {(review.userId === user.id) && (
                 <td>
-                    <button onClick={()=>deleteReview(review.id)}>Delete</button>
+                    <button onClick={()=>deleteReview(review)}>Delete</button>
                 </td>
-            )} */}
+            )}
         </tr>
     ));
 };

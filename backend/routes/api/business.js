@@ -39,12 +39,17 @@ router.get('/:id/reviews', asyncHandler(async (req,res)=>{
         where: {
             businessId,
         }
-    })
+    });
+    return res.json({
+        reviews
+    });
 }));
 
-router.post('/:id/reviews',asyncHandler(async (req,res)=>{
+router.post('/:id(\\d+)/reviews',asyncHandler(async (req,res)=>{
+    console.log("PLEASEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
     const businessId = parseInt(req.params.id,10);
     const {rating,contents,userId} = req.body;
+    console.log("REQ BODY : ", req.body, businessId);
     const review = await Review.create({
         rating,
         contents,

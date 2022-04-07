@@ -113,11 +113,15 @@ const businessReducer = (state=initialState, action) => {
             });
             return {...allBusiness,...state,list: action.list.businesses};
         case LOAD_REVIEWS:
+            console.log("AM I HERER>K>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             return {
                 ...state,
                 [action.businessId]: {
                     ...state[action.businessId],
-                    reviews: action.reviews.map((review)=>review.id),
+                    reviews: action.reviews.map((review)=>{
+                        console.log(review);
+                        return review.id
+                    }),
                 },
             };
         case REMOVE_REVIEW:

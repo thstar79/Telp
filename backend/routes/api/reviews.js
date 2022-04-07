@@ -11,12 +11,6 @@ router.get('/', async(req,res)=>{
     res.json({reviews});
 });
 
-router.get('/reviews/:id(\\d+)',asyncHandler(async (req,res)=>{
-
-}));
-
-router.post('/')
-
 router.post('/',asyncHandler(async (req,res)=>{
     const {rating,contents,userId,businessId} = req.body;
 
@@ -51,8 +45,7 @@ router.delete('/:id(\\d+)', async(req, res) => {
     }
 });
 
-router.patch('/:id(\\d+)', async(req,res)=>{
-    const userId = req.user.id;
+router.put('/:id(\\d+)', async(req,res)=>{
     console.log(req.cookies);
     const id = parseInt(req.params.id,10);
     const review = await Review.findByPk(id);
@@ -60,9 +53,11 @@ router.patch('/:id(\\d+)', async(req,res)=>{
     if(review) {
         review.contents = req.body.contents;
         await review.save();
+        console.log("Success update");
         res.json({message:"Success",review});
     }
     else{
+        console.log("Failed update");
         res.json({message: "Could not find review please try again."});
     }
 });

@@ -68,10 +68,10 @@ const BusinessDetail = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <ReviewFormPage />
                     <BusinessReviews business={business} setEditReviewId={setEditReviewId} />
                 </tbody>
             </table>
+            <ReviewFormPage reviewId={editReviewId} business={business}/>
         </div>
         </div>
     );

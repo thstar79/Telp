@@ -1,3 +1,5 @@
+import { csrfFetch } from "./csrf";
+
 export const LOAD_REVIEWS = "reviews/LOAD_REVIEWS";
 export const UPDATE_REVIEW = "reviews/UDPATE_REVIEW";
 export const REMOVE_REVIEW = "reviews/REMOVE_REVIEW";
@@ -21,9 +23,11 @@ const remove = (reviewId, businessId) => ({
 });
 
 export const getAllReviews = (id) => async (dispatch) => {
+    console.log("GET ALL REVIVEWSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     const res = await fetch(`/api/business/${id}/reviews`);
     if(res.ok) {
-        const reviews = await res.json();
+        const {reviews} = await res.json();
+        console.log("REVIEW 입니다.",reviews);
         dispatch(load(reviews,id));
         return reviews; 
     }
@@ -41,11 +45,14 @@ export const editDBReview = (payload, flag=1)=> async (dispatch) =>{
         url = `/api/reviews/${payload.id}`;
         method="PUT";
     }
-    const res = await fetch(url, {
+
+    console.log("FLAG: ", payload);
+    const res = await csrfFetch(url, {
         method,
         headers: { "Content-Type": "application/json"},
         body: JSON.stringify(payload),
     });
+    console.log(res);
     if(res.ok) {
         const review = await res.json();
         console.log("REVIEW : ", review);
@@ -60,7 +67,7 @@ export const editDBReview = (payload, flag=1)=> async (dispatch) =>{
 };
 
 export const delDBReview = (review) => async dispatch => {
-    const res = await fetch(`/api/reviews/${review.id}`, {
+    const res = await csrfFetch(`/api/reviews/${review.id}`, {
         method: "DELETE",
     });
     if(res.ok) {
@@ -68,7 +75,7 @@ export const delDBReview = (review) => async dispatch => {
         dispatch(remove(review.id,review.businessId));
     }
     else{
-        const err = await Response.json();
+        const err = await res.json();
         console.log(err);
     }
 };
@@ -79,9 +86,11 @@ const reviewsReducer = (state=initialState,action) => {
     switch(action.type){
         case LOAD_REVIEWS:
             const newReviews = {};
+            console.log(action);
             action.reviews.forEach((review)=>{
                 newReviews[review.id] = review;
             });
+            console.log("STATE입니다.", newReviews);
             return {...state, ...newReviews};
         case REMOVE_REVIEW:
             const newState = {...state};
@@ -90,6 +99,7 @@ const reviewsReducer = (state=initialState,action) => {
         case UPDATE_REVIEW:
             return {...state, [action.review.id]: action.review}
         default:
+            console.log("여기를 들어와야 할 것 같은데....");
             return state;
     }
 }
