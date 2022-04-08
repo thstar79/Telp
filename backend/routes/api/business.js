@@ -33,6 +33,37 @@ router.post('/',asyncHandler(async (req,res)=>{
     });
 }));
 
+router.delete('/:id(\\d+)', async(req, res) => {
+    const id = parseInt(req.params.id,10);
+    const business = await Business.findByPk(id);
+    if(business){
+        await business.destroy();
+        res.json({message: "success"});
+    }
+    else{
+        errors.push('Business is not in database');
+        res.json({message: "business failure"});
+    }
+});
+
+router.patch('/:id(\\d+)', async(req,res)=>{
+    console.log(req.cookies);
+    const id = parseInt(req.params.id,10);
+    const business = await Business.findByPk(id);
+    console.log(business,"!+++++++++++++++++++++");
+    if(business) {
+        business.description = req.body.description;
+        business.zip_code = req.body.zip_code;
+        await business.save();
+        console.log("Success update");
+        res.json({message:"Success",business});
+    }
+    else{
+        console.log("Failed update");
+        res.json({message: "Could not find review please try again."});
+    }
+});
+
 router.get('/:id/reviews', asyncHandler(async (req,res)=>{
     const businessId = parseInt(req.params.id,10);
     const reviews = await Review.findAll({

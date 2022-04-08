@@ -27,7 +27,7 @@ function BusinessSignupFormPage() {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(businessActions.signup({name,description:desc,image,address,city,state,zip_code,lat,lng,userId:sessionUser.id}));
+    dispatch(businessActions.editDBBusiness({name,description:desc,image,address,city,state,zip_code,lat,lng,userId:sessionUser.id},0));
     // .catch(async (res) => {
     //     const data = await res.json();
     //     if (data && data.errors) setErrors(data.errors);

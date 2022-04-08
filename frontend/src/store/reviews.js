@@ -5,11 +5,14 @@ export const UPDATE_REVIEW = "reviews/UDPATE_REVIEW";
 export const REMOVE_REVIEW = "reviews/REMOVE_REVIEW";
 export const ADD_REVIEW = "reviews/ADD_REVIEW";
 
-const load = (reviews, businessId) => ({
-    type: LOAD_REVIEWS,
-    reviews,
-    businessId,
-});
+const load = (reviews, businessId) => {
+    console.log("22222222222222222222222222222222222222");
+    return ({
+        type: LOAD_REVIEWS,
+        reviews,
+        businessId,
+    });
+};
 
 const update = (review) => ({
     type: UPDATE_REVIEW,
@@ -28,6 +31,7 @@ export const getAllReviews = (id) => async (dispatch) => {
     if(res.ok) {
         const {reviews} = await res.json();
         console.log("REVIEW 입니다.",reviews);
+        console.log("111111111111111111111111111111111111111111");
         dispatch(load(reviews,id));
         return reviews; 
     }
@@ -96,6 +100,7 @@ const reviewsReducer = (state=initialState,action) => {
             action.reviews.forEach((review)=>{
                 newReviews[review.id] = review;
             });
+            console.log("33333333333333333333333333333333");
             console.log("STATE입니다.", newReviews);
             return {...state, ...newReviews};
         case REMOVE_REVIEW:

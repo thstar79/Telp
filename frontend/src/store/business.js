@@ -12,7 +12,7 @@ const setBusiness = (business)=>{
     };
 };
 
-const removeBusiness = ()=>{
+const removeBusiness = (businessId)=>{
     return {
         type: REMOVE_BUSINESS,
     };
@@ -33,11 +33,19 @@ const sortList = (list) => {
       .map((business) => business.id);
   };
   
-export const signup = (business) => async (dispatch) => {
+export const editDBBusiness = (business, flag=1) => async (dispatch) => {
     const {name,description,image,address,city,state,zip_code,lat,lng,userId} = business;
-    console.log("여기까지는 당연해");
-    const response = await csrfFetch('/api/business',{
-        method: "POST",
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",business);
+    let method = "POST";
+    let url='/api/business';
+    if(flag === 1){
+        method = "PATCH";
+        url = `/api/business/${business.id}`;
+    }
+    console.log(url);
+    const response = await csrfFetch(url,{
+        method,
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
             name,
             description,
@@ -51,10 +59,33 @@ export const signup = (business) => async (dispatch) => {
             userId
         }),
     });
-    const data = await response.json();
-    dispatch(setBusiness(data.business));
+    if(response.ok){
+        const data = await response.json();
+        dispatch(setBusiness(data.business));
+        return data.business;
+    }
+    else{
+        const error = await response.json();
+        console.error("ERROR : ", error);
+        return business;
+    }
+    
     return response;
 }
+
+export const delDBBusiness = (business) => async dispatch => {
+    const res = await csrfFetch(`/api/business/${business.id}`, {
+        method: "DELETE",
+    });
+    if(res.ok) {
+        const result = await res.json();
+        dispatch(removeBusiness(business.id));
+    }
+    else{
+        const err = await res.json();
+        console.log(err);
+    }
+};
 
 export const getOneBusiness = (id) => async (dispatch) => {
     console.log("Get ONE BUSINESS");
@@ -113,7 +144,7 @@ const businessReducer = (state=initialState, action) => {
             });
             return {...allBusiness,...state,list: action.list.businesses};
         case LOAD_REVIEWS:
-            console.log("AM I HERER>K>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            console.log("444444444444444444444444444444444444444444444444");
             return {
                 ...state,
                 [action.businessId]: {

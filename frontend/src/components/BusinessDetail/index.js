@@ -1,21 +1,40 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getOneBusiness } from "../../store/business";
+import { getOneBusiness,editDBBusiness,delDBBusiness } from "../../store/business";
 import ReviewFormPage from "../ReviewFormPage";
 import BusinessReviews from "../BusinessReviews";
 //import EditBusinessForm from "./EditBusinessForm";
 
 const BusinessDetail = () => {
-    console.log("BUSINESS DETAIL");
+  
+  console.log("BUSINESS DETAIL");
+  const user = useSelector((state)=>state.session.user);
   const { businessId } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
   const business = useSelector((state) => state.business[businessId]);
   
   const [showEditBusinessForm, setShowEditBusinessForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [editReviewId, setEditReviewId] = useState(null);
-  const [flag, setFlag] = useState(0);
+  const lat = 0;
+  const lng = 0;
+  const [name, setName] = useState("");
+  const [desc,setDesc] = useState("");
+  const [image,setImage] = useState("");
+  const [address, setAddress] = useState();
+  const [city, setCity] = useState();
+  const [state, setState] = useState();
+  const [zip_code, setZipcode] = useState();
+  const [editId, setEditId] = useState(-1);
+
+  const updateName = (e)=>setName(e.target.value);
+  const updateDesc = (e)=>setDesc(e.target.value);
+  const updateAddress = (e)=>setAddress(e.target.value);
+  const updateCity = (e)=>setCity(e.target.value);
+  const updateState = (e)=>setState(e.target.value);
+  const updateZipcode = (e)=>setZipcode(e.target.value);
 
   useEffect(() => {
     setShowEditBusinessForm(false);
@@ -27,14 +46,54 @@ const BusinessDetail = () => {
   if (!business) {
     return null;
   }
+  const handleSubmit = async (e) =>{
+    e.preventDefault();
+    console.log("handle submit");
+    dispatch(editDBBusiness({
+      id:businessId,
+      name,
+      description:desc,
+      image,
+      address,
+      city,
+      state,
+      zip_code,
+      lat,
+      lng,
+      userId:user.id
+    }));
+    setEditId(-1);
+}
+
+const editBusiness = async (business) => {
+    console.log("고치실래요?", business.id);
+    setEditId(business.id);
+    setName(user.id);
+    setDesc(business.description);
+    setImage(business.image);
+    setAddress(business.address);
+    setCity(business.city);
+    setState(business.state);
+    setZipcode(business.zip_code);
+}
+const deleteBusiness = async (business) => {
+  console.log("지우실래요? ", business.id )
+  dispatch(delDBBusiness(business));
+  history.push('/business');
+}
 
   let content = null;
 
     content = (
         <div className="business-detail-lists">
         <div>
-            <h2>Information</h2>
-            <ul>
+          <h2>Information</h2>
+          <ul>
+            {editId !== business.id && (
+              <>
+            <li>
+              <img src={business.image} width="100px"/>
+            </li>
             <li>
                 <b>Number</b> {business.name}
             </li>
@@ -50,14 +109,70 @@ const BusinessDetail = () => {
             <li>
                 <b>Zip Code</b>{business.zip_code}
             </li>
+            </>
+            )}
+            {(editId === business.id)&& (
+            <>
+                <li>
+                  <img src={business.image} width="100px"/>
+                </li>
+                <li>
+                    <input
+                        value={business.name} 
+                        onChange={updateName}
+                        style={{ border: "none", backgroundColor: "transparent"}} disabled
+                    />
+                </li>
+                <li>
+                    <input
+                        value={desc} 
+                        onChange={updateDesc}
+                    />
+                </li>
+                <li>
+                <input
+                        value={address} 
+                        onChange={updateAddress}
+                    />
+                </li>
+                <li>
+                <input
+                        value={city} 
+                        onChange={updateCity}
+                    />
+                </li>
+                <li>
+                <input
+                        value={zip_code} 
+                        onChange={updateZipcode}
+                    />
+                </li>
+            </>)}
+            {editId === business.id && (
+                <li>
+                    <button onClick={(e)=>handleSubmit(e)}>Update</button>
+                </li>
+            )}
+            
+            {(business.userId === user.id && editId === -1)  && (
+                <li>
+                    <button onClick={()=>editBusiness(business)}>Edit</button>
+                </li>
+            )}
+            {(business.userId === user.id && editId === -1) && (
+                <li>
+                    <button onClick={()=>deleteBusiness(business)}>Delete</button>
+                </li>
+            )}
             </ul>
         </div>
+
         <div>
             <h2>
             Reviews
-            <button onClick={() => {
+            {/* <button onClick={() => {
             return setShowEditForm(true);
-            }}> + </button>
+            }}> + </button> */}
             </h2>
             <table>
                 <thead>
@@ -83,12 +198,6 @@ const BusinessDetail = () => {
           className="business-detail-image"
           style={{ backgroundImage: `${business.image}` }}
         ></div>
-        {/* <div>
-          <h1 className="bigger">{business.name}</h1>
-          {business.captured && (
-            <button onClick={() => setShowEditPokeForm(true)}>Edit</button>
-          )}
-        </div> */}
       </div>
       {content}
     </div>
