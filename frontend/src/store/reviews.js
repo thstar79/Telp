@@ -39,6 +39,11 @@ export const getAllReviews = (id) => async (dispatch) => {
 }
 
 export const editDBReview = (payload, flag=1)=> async (dispatch) =>{
+    console.log("===============================================================================");
+    console.log("===============================================================================");
+    console.log("===============================================================================");
+    console.log("===============================================================================");
+    console.log("===============================================================================");
     let method="POST";
     let url = `/api/business/${payload.businessId}/reviews`;
     if(flag === 1){
@@ -55,6 +60,7 @@ export const editDBReview = (payload, flag=1)=> async (dispatch) =>{
     console.log(res);
     if(res.ok) {
         const review = await res.json();
+        //const {review} = temp;
         console.log("REVIEW : ", review);
         dispatch(update(review));
         return review;
@@ -97,6 +103,8 @@ const reviewsReducer = (state=initialState,action) => {
             delete newState[action.reviewId];
             return newState;
         case UPDATE_REVIEW:
+            console.log("PPPPPPPPPPPPPPPPPP");
+            console.log(action);
             return {...state, [action.review.id]: action.review}
         default:
             console.log("여기를 들어와야 할 것 같은데....");

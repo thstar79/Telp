@@ -11,13 +11,15 @@ const BusinessReviews = ({business, setEditReviewId}) => {
     });
     const [rating, setRating] = useState(5);
     const [contents,setContents] = useState("Write a review");
+    const [userId,setUserId] = useState(3);
+    const [reviewId, setReviewId] = useState();
+    const [editId, setEditId] = useState(-1);
+
     console.log(business,"REVIEWS");
     const dispatch = useDispatch();
     const updateRating = (e)=>setRating(e.target.value);
-    const updateContents = (e, review)=>{
-        console.log("contents 바꿀래요", e.target.value);
-        review.contents = e.target.value;
-    }
+    const updateUserId = (e)=>setUserId(e.target.value);
+    const updateContents = (e)=>setContents(e.target.value);
 
     useEffect(()=>{
         dispatch(getAllReviews(business.id));
@@ -25,16 +27,35 @@ const BusinessReviews = ({business, setEditReviewId}) => {
 
     if(!reviews) return null;
     
-    // let component1 = 
-    
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+        console.log("handle submit");
+        const payload = {
+            id: reviewId,
+            rating,
+            contents,
+            userId:user.id,
+            businessId: business.id,
+        };
+        console.log(payload,"SUPER PAYLOAD");
+        const returnedReview = await dispatch(editDBReview(payload));
+        setEditId(-1);
+    }
+
     const editReview = async (review) => {
         console.log("고치실래요?", review.id);
-        const inputboxes = document.getElementsByClassName(`reviewForm${review.id}`);
-        for(let i=0;i<inputboxes.length;++i){
-            const inputbox = inputboxes[i];
-            inputbox.style={};
-            inputbox.disabled = false; 
-        }
+        setUserId(user.id);
+        setEditId(review.id);
+        setReviewId(review.id);
+        setContents(review.contents);
+        setRating(review.rating);
+        // const inputboxes = document.getElementsByClassName(`reviewForm${review.id}`);
+        // for(let i=0;i<inputboxes.length;++i){
+        //     const inputbox = inputboxes[i];
+        //     inputbox.type="text";
+        //     inputbox.style={};
+        //     inputbox.disabled = false; 
+        // }
         //dispatch(editDBReview(review));
     }
     const deleteReview = async (review) => {
@@ -44,35 +65,66 @@ const BusinessReviews = ({business, setEditReviewId}) => {
 
     return reviews.map((review)=>(
         <tr key={review.id}>
-            {/* <td>
-                <img
-                    className="review-image"
-                    alt={review.image}
-                    src={`${review.image}`}
-                />
-            </td> */}
-            <td>
-                <input class={`reviewForm${review.id}`} 
-                    value={review.contents} 
-                    onChange={(e)=>updateContents(e,review)}
-                    style={{ border: "none", backgroundColor: "transparent"}} />
-            </td>
-            <td>
-                <input class={`reviewForm${review.id}`} 
-                    value={review.userId} 
-                    style={{ border: "none", backgroundColor: "transparent"}} disabled />
-            </td>
-            <td>
-                <input class={`reviewForm${review.id}`} 
-                    value={review.rating} 
-                    style={{ border: "none", backgroundColor: "transparent"}} disabled />
-            </td>
-            {(review.userId === user.id)  && (
+            {/* {
+                
+            } */}
+            {(editId !== review.id) && (
+            <>
+                <td>
+                    <input className={`reviewForm${review.id}`} 
+                        value={review.userId} 
+                        style={{ border: "none", backgroundColor: "transparent"}} disabled />
+                </td>
+                <td>
+                    <input className={`reviewForm${review.id}`} 
+                        value={review.contents} 
+                        style={{ border: "none", backgroundColor: "transparent"}} />
+                </td>
+                <td>
+                    <input className={`reviewForm${review.id}`}
+                        type="number"
+                        value={review.rating} 
+                        style={{ border: "none", backgroundColor: "transparent"}} disabled />
+                </td>
+            </>)}
+            {(editId === review.id)&& (
+            <>
+                <td>
+                    <input className={`reviewForm${review.id}`} 
+                        value={userId} 
+                        onChange={updateUserId}
+                        style={{ border: "none", backgroundColor: "transparent"}} disabled
+                    />
+                </td>
+                <td>
+                    <input className={`reviewForm${review.id}`} 
+                        value={contents} 
+                        onChange={updateContents}
+                    />
+                </td>
+                <td>
+                    <input className={`reviewForm${review.id}`}
+                        type="number"
+                        min="1"
+                        max="5"
+                        value={rating} 
+                        onChange={updateRating}
+                    />
+                </td>
+            </>)}
+            
+            {(editId === review.id) && (
+                <td>
+                    <button onClick={(e)=>handleSubmit(e)}>Update</button>
+                </td>
+            )}
+            
+            {(review.userId === user.id && editId === -1)  && (
                 <td>
                     <button onClick={()=>editReview(review)}>Edit</button>
                 </td>
             )}
-            {(review.userId === user.id) && (
+            {(review.userId === user.id && editId === -1) && (
                 <td>
                     <button onClick={()=>deleteReview(review)}>Delete</button>
                 </td>

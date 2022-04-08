@@ -11,6 +11,7 @@ function ReviewFormPage({reviewId,business}) {
     const history = useHistory();
     const [rating, setRating] = useState(5);
     const [contents,setContents] = useState("Write a review");
+    const [refresh, setRefresh] = useState(false);
     const [errors, setErrors] = useState([]);
 
     const updateRating = (e)=>setRating(e.target.value);
@@ -38,6 +39,8 @@ function ReviewFormPage({reviewId,business}) {
             payload.businessId = businessId;
             returnedReview = await dispatch(editDBReview(payload, 0));
         }
+        setRefresh(true);
+        setRefresh(false);
     }
 
     return (

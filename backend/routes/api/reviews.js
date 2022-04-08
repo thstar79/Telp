@@ -24,7 +24,7 @@ router.post('/',asyncHandler(async (req,res)=>{
     const validatorErrors = validationResult(req);
     if(validatorErrors.isEmpty()) {
         await review.save();
-        res.json({message:"success"});
+        res.json({message:"success", review});
     }
     else{
         const errors = validatorErrors.array().map((error)=>error.msg);
@@ -52,6 +52,7 @@ router.put('/:id(\\d+)', async(req,res)=>{
 
     if(review) {
         review.contents = req.body.contents;
+        review.rating = req.body.rating;
         await review.save();
         console.log("Success update");
         res.json({message:"Success",review});
