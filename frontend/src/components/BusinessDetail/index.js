@@ -8,12 +8,12 @@ import BusinessReviews from "../BusinessReviews";
 
 const BusinessDetail = () => {
   
-  console.log("BUSINESS DETAIL");
   const user = useSelector((state)=>state.session.user);
   const { businessId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
   const business = useSelector((state) => state.business[businessId]);
+  console.log("BUSINESS DETAIL",businessId, business);
   
   const [showEditBusinessForm, setShowEditBusinessForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);

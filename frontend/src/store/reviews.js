@@ -26,7 +26,7 @@ const remove = (reviewId, businessId) => ({
 });
 
 export const getAllReviews = (id) => async (dispatch) => {
-    console.log("GET ALL REVIVEWSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+    console.log("GET ALL REVIVEWSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",id);
     const res = await fetch(`/api/business/${id}/reviews`);
     if(res.ok) {
         const {reviews} = await res.json();
@@ -83,6 +83,7 @@ export const delDBReview = (review) => async dispatch => {
     if(res.ok) {
         const result = await res.json();
         dispatch(remove(review.id,review.businessId));
+        return result;
     }
     else{
         const err = await res.json();
@@ -104,8 +105,11 @@ const reviewsReducer = (state=initialState,action) => {
             console.log("STATE입니다.", newReviews);
             return {...state, ...newReviews};
         case REMOVE_REVIEW:
-            const newState = {...state};
+            //const newState = {...state};
+            const newState = Object.assign({},state);
+            console.log("PREV STATE : ", newState);
             delete newState[action.reviewId];
+            console.log("POST STATE : ", newState);
             return newState;
         case UPDATE_REVIEW:
             console.log("PPPPPPPPPPPPPPPPPP");

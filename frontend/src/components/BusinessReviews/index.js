@@ -3,6 +3,16 @@ import {useSelector, useDispatch} from "react-redux";
 import {delDBReview, editDBReview, getAllReviews} from "../../store/reviews";
 
 const BusinessReviews = ({business, setEditReviewId}) => {
+    
+    
+    const [cbusiness,setCBusiness] = useState(business);
+    const [rating, setRating] = useState(5);
+    const [contents,setContents] = useState("Write a review");
+    const [userId,setUserId] = useState(3);
+    const [reviewId, setReviewId] = useState();
+    const [editId, setEditId] = useState(-1);
+    const [isSubmit, setIsSubmit] = useState(false);
+
     const user = useSelector((state)=>state.session.user);
     let reviews = useSelector((state)=>{
         console.log(Object.keys(state.reviews).length,"666666666666666666666666666666666666");
@@ -10,21 +20,15 @@ const BusinessReviews = ({business, setEditReviewId}) => {
         const keys = Object.keys(state.reviews);
         for(let i=0;i<keys.length;++i){
             const review = state.reviews[keys[i]];
-            if(review.businessId === business.id){
+            if(review.businessId === cbusiness.id){
                 arr.push(review);
             }
         }
-        console.log(state.reviews,"777777777777777777777777777777777777777777777");
+        console.log(state.reviews,arr,"777777777777777777777777777777777777777777777");
         if(arr.length === 0) return null;
         return arr;
     });
     console.log(reviews,"8888888888888888888888888888888888");
-    const [rating, setRating] = useState(5);
-    const [contents,setContents] = useState("Write a review");
-    const [userId,setUserId] = useState(3);
-    const [reviewId, setReviewId] = useState();
-    const [editId, setEditId] = useState(-1);
-    const [isSubmit, setIsSubmit] = useState(false);
 
     console.log(business,"REVIEWS44");
     const dispatch = useDispatch();
@@ -33,8 +37,8 @@ const BusinessReviews = ({business, setEditReviewId}) => {
     const updateContents = (e)=>setContents(e.target.value);
 
     useEffect(()=>{
-        console.log("000000000000000000000000000000000");
-        dispatch(getAllReviews(business.id));
+        console.log("000000000000000000000000000000000",cbusiness);
+        dispatch(getAllReviews(cbusiness.id));
         console.log("555555555555555555555555555555555555555555555555");
         setIsSubmit(false);
     },[business.id,isSubmit,dispatch]);
