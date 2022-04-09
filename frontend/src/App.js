@@ -41,6 +41,9 @@ function App() {
           <Route path="/business/:businessId">
             <BusinessDetail />
           </Route>
+          <Route>
+            404 Error
+          </Route>
         </Switch>
       </div>
     )}

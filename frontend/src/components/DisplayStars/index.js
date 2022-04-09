@@ -1,20 +1,11 @@
 function DisplayStars({rating,id}) {
     
-    if(rating){
-        document.getElementById("dsp"+id).style.width = parseInt(rating * 60) + 'px';
+    if(rating && id){
+        const ratefill = document.getElementById("dsp"+id);
+        if(ratefill)    ratefill.style.width = parseInt(rating * 60) + 'px';
         console.log(parseInt(rating*60), "SUPER ********************* RATING", id);
     }
-    //
-    // let items = document.querySelectorAll('.rate_radio');
-    // items.forEach(function(item, idx){
-    //     if(idx < rating){
-    //         item.checked = true;
-    //         console.log("checked");
-    //     }else{
-    //         item.checked = false;
-    //     }
-    // });
-
+    
     return (
     <div className="review_rating rating_point">
         <div className="rating">

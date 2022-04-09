@@ -31,7 +31,7 @@ function Navigation({isLoaded}){
             <ul>
                 {isLoaded && sessionLinks}
                 <li>
-                    <NavLink exact to="/" style={{color: 'white', textDecoration: 'none'}} activeStyle={{color: 'red', textDecoration: 'none'}}>Home</NavLink>
+                    <NavLink exact to="/business" style={{color: 'white', textDecoration: 'none'}} activeStyle={{color: 'red', textDecoration: 'none'}}>Home</NavLink>
                 </li>
                 <li>
                     <NavLink to='/business/signup' style={{color: 'white', textDecoration: 'none'}} activeStyle={{color: 'red', textDecoration: 'none'}}>Register a Business</NavLink>
