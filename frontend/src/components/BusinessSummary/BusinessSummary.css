@@ -1,0 +1,40 @@
+.summary{
+    display:flex;
+    flex-direction: row;
+    height:300px;
+    border: solid black;
+    margin: 10px;
+    width: 800px;
+}
+
+.spacer{
+    width:30px;
+}
+
+.summary_left{
+    margin: 20px;
+    height: 250px;
+}
+
+.summary_right{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 500px;
+    height:250px;
+}
+
+.business_name{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color:black;
+    font-size: 30px;
+}
+
+.first_comment{
+    display: flex;
+}
+
+.firstreview_contents{
+    width:300px;
+}

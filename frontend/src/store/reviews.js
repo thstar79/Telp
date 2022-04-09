@@ -5,7 +5,7 @@ export const UPDATE_REVIEW = "reviews/UDPATE_REVIEW";
 export const REMOVE_REVIEW = "reviews/REMOVE_REVIEW";
 export const ADD_REVIEW = "reviews/ADD_REVIEW";
 
-const load = (reviews, businessId) => {
+const load = (reviews, businessId = -1) => {
     console.log("22222222222222222222222222222222222222");
     return ({
         type: LOAD_REVIEWS,
@@ -24,6 +24,21 @@ const remove = (reviewId, businessId) => ({
     reviewId,
     businessId,
 });
+
+export const loadReviews = () => async (dispatch) => {
+    const res = await fetch(`/api/reviews`);
+    if(res.ok) {
+        const {reviews} = await res.json();
+        dispatch(load(reviews));
+        return reviews; 
+    }
+    else{
+        const error = await res.json();
+        console.error(error);
+        return [];
+    }
+}
+
 
 export const getAllReviews = (id) => async (dispatch) => {
     console.log("GET ALL REVIVEWSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",id);

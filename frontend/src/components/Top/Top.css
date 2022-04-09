@@ -1,0 +1,8 @@
+.Top{
+    display: flex;
+    flex-direction: column;
+    width: 100wh;
+    background-image: url("../../assets/image/topImg.jpg");
+    background-repeat : no-repeat;
+    background-size : cover;
+}

@@ -1,0 +1,17 @@
+.topMenu {
+    font-weight: bold;
+    height: 50px;
+}
+
+ul{
+    list-style-type: none;
+    display: flex;
+    justify-content: start;
+    flex-direction: row
+}
+
+li{
+    width: 300px;
+    color: white important;
+    font-size: 25px;
+}

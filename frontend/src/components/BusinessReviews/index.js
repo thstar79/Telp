@@ -1,12 +1,12 @@
 import { useEffect,useState } from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {delDBReview, editDBReview, getAllReviews} from "../../store/reviews";
+import StarRating from "../StarRating";
 
-const BusinessReviews = ({business, setEditReviewId}) => {
-    
+const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
     
     const [cbusiness,setCBusiness] = useState(business);
-    const [rating, setRating] = useState(5);
+    //const [rating, setRating] = useState(5);
     const [contents,setContents] = useState("Write a review");
     const [userId,setUserId] = useState(3);
     const [reviewId, setReviewId] = useState();

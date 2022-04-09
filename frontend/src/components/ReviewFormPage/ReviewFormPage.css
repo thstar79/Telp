@@ -55,7 +55,8 @@ h1{
     cursor: pointer;
 }
 .rating .ratefill {
-    background-color: #ff8;
+    /* background-color: #ff8; */
+    background-color: aqua;
     width: 0;
     height: 60px;
     position: absolute;

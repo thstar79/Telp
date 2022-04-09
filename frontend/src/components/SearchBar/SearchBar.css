@@ -1,0 +1,21 @@
+.top2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo{
+    color: white;
+    font-family: bold;
+    font-size: 30px;
+    height:50px;
+}
+
+.searchBar{
+    height: 50px;
+}
+
+.extra{
+    height:50px;
+}

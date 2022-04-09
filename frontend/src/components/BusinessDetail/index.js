@@ -27,6 +27,7 @@ const BusinessDetail = () => {
   const [city, setCity] = useState();
   const [state, setState] = useState();
   const [zip_code, setZipcode] = useState();
+  const [rating, setRating] = useState(0);
   const [editId, setEditId] = useState(-1);
 
   const updateName = (e)=>setName(e.target.value);
@@ -36,7 +37,36 @@ const BusinessDetail = () => {
   const updateState = (e)=>setState(e.target.value);
   const updateZipcode = (e)=>setZipcode(e.target.value);
 
-  useEffect(() => {
+  const setRate = (newrate) => {
+    setRating(newrate);
+    document.querySelector('.ratefill').style.width = parseInt(newrate * 60) + 'px';
+    let items = document.querySelectorAll('.rate_radio');
+    items.forEach(function(item, idx){
+        if(idx < newrate){
+            item.checked = true;
+        }else{
+            item.checked = false;
+        }
+    });
+}
+const showMessage = (type) => {
+    switch(type){
+        case 'rate':
+            document.querySelector('.review_rating .warning_msg').style.display = 'block';
+            setTimeout(function(){
+                document.querySelector('.review_rating .warning_msg').style.display = 'none';
+            },1000);            
+            break;
+        case 'review':
+            document.querySelector('.review_contents .warning_msg').style.display = 'block';
+            setTimeout(function(){
+                document.querySelector('.review_contents .warning_msg').style.display = 'none';
+            },1000);    
+            break;
+    }
+}
+
+useEffect(() => {
     setShowEditBusinessForm(false);
     setShowEditForm(false);
     setEditReviewId(null);
@@ -170,9 +200,6 @@ const deleteBusiness = async (business) => {
         <div>
             <h2>
             Reviews
-            {/* <button onClick={() => {
-            return setShowEditForm(true);
-            }}> + </button> */}
             </h2>
             <table>
                 <thead>
@@ -183,10 +210,10 @@ const deleteBusiness = async (business) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <BusinessReviews business={business} setEditReviewId={setEditReviewId} />
+                    <BusinessReviews business={business} rating={rating} setRating={setRating} setRate={setRate} showMessage={showMessage} />
                 </tbody>
             </table>
-            <ReviewFormPage reviewId={editReviewId} business={business}/>
+            <ReviewFormPage reviewId={editReviewId} business={business} rating={rating} setRating={setRating} setRate={setRate} showMessage={showMessage} />
         </div>
         </div>
     );

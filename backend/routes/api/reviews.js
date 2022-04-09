@@ -2,7 +2,7 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 const {check, validationResult} = require('express-validator');
 const router = express.Router();
-const {Review} = require('../../db/models');
+const {User, Business, Review} = require('../../db/models');
 
 router.get('/', async(req,res)=>{
     const reviews = await Review.findAll({
