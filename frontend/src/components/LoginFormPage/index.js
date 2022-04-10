@@ -15,7 +15,7 @@ function LoginFormPage() {
     <Redirect to="/" />
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
     return dispatch(sessionActions.login({ credential, password }))
@@ -25,12 +25,13 @@ function LoginFormPage() {
       });
   }
 
-  const demoSubmit = (e) => {
+  const demoSubmit = async (e) => {
     e.preventDefault();
-    setCredential("demo@user.io");
-    setPassword("password");
-    //console.log("!!!!!!!!!!!!!!!!!!!!!!", credential, password,"!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    //return dispatch(sessionActions.login({ credential, password }));
+    return dispatch(sessionActions.login({ credential : "Demo-lition", password: 'password' }))
+            .catch(async (res)=>{
+              const data = await res.json();
+              if(data && data.errors) setErrors(data.errors);
+            })
   }
 
   return (

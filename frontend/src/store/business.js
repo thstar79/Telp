@@ -35,7 +35,6 @@ const sortList = (list) => {
   
 export const editDBBusiness = (business, flag=1) => async (dispatch) => {
     const {name,description,image,address,city,state,zip_code,lat,lng,userId} = business;
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",business);
     let method = "POST";
     let url='/api/business';
     if(flag === 1){
@@ -62,15 +61,13 @@ export const editDBBusiness = (business, flag=1) => async (dispatch) => {
     if(response.ok){
         const data = await response.json();
         dispatch(setBusiness(data.business));
-        return data.business;
+        return response;
     }
     else{
         const error = await response.json();
         console.error("ERROR : ", error);
-        return business;
+        return error;
     }
-    
-    return response;
 }
 
 export const delDBBusiness = (business) => async dispatch => {
@@ -88,17 +85,14 @@ export const delDBBusiness = (business) => async dispatch => {
 };
 
 export const getOneBusiness = (id) => async (dispatch) => {
-    console.log("Get ONE BUSINESS");
     const response = await fetch(`/api/business/${id}`);
     if(response.ok) {
         const {business} = await response.json();
         dispatch(setBusiness(business));
-        console.log(business,"*********");
     }
 }
 export const getBusiness = () => async (dispatch) => {
     const response = await fetch(`/api/business`);
-    console.log("나 여기는 오니?");
   
     if (response.ok) {
       const list = await response.json();

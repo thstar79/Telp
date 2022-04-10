@@ -7,9 +7,9 @@ import * as businessActions from "../../store/business";
 
 function BusinessSignupFormPage() {
   const dispatch = useDispatch();
-  let history = useHistory();
+  // let history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
-  const businessList = useSelector((state)=>state.business.list);
+  // const businessList = useSelector((state)=>state.business.list);
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [image, setImage] = useState("");
@@ -17,22 +17,33 @@ function BusinessSignupFormPage() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip_code, setZipcode] = useState();
-  
   const [errors, setErrors] = useState([]);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const lat = 0;
   const lng = 0;
 
   if (!sessionUser) return <Redirect to="/login" />;
-  
-  const handleSubmit = (e) => {
+  if(errors.length === 0 && isSubmit) return <Redirect to="/" />;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(businessActions.editDBBusiness({name,description:desc,image,address,city,state,zip_code,lat,lng,userId:sessionUser.id},0));
-    history.push('/business');
+    setErrors([]);
+    return dispatch(businessActions.editDBBusiness({name,description:desc,image,address,city,state,zip_code,lat,lng,userId:sessionUser.id},0))
+      .then(()=>{
+        setIsSubmit(true);
+        setErrors([]);
+      })
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+        setIsSubmit(false);
+      });
   };
 
   return (
-    <form onSubmit={e=>{handleSubmit(e);return <Redirect to="/login" />;}}>
+    // <form onSubmit={e=>{handleSubmit(e);return <Redirect to="/login" />;}}>
+    <form onSubmit={handleSubmit}>
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>

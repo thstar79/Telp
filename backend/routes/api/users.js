@@ -16,6 +16,14 @@ router.post('/',asyncHandler(async (req,res)=>{
     const {first_name, last_name, email, password, zip_code} = req.body;
     const user = await User.signup({first_name, last_name, email, password, zip_code});
 
+    if(!user) {
+        const err = new Error('Sign Up failed');
+        err.status = 401;
+        err.title = 'Sign Up failed';
+        err.errors = ['The provided information is already existed.'];
+        return next(err);
+    }
+
     await setTokenCookie(res, user);
 
     return res.json({

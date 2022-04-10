@@ -44,7 +44,6 @@ export const signup = (user) => async (dispatch) => {
             zip_code
         }),
     });
-    console.log("여기는 들어오나");
     const data = await response.json();
     dispatch(setUser(data.user));
     return response;

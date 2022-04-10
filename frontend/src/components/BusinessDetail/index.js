@@ -28,6 +28,8 @@ const BusinessDetail = () => {
     const [zip_code, setZipcode] = useState();
     const [rating, setRating] = useState(0);
     const [editId, setEditId] = useState(-1);
+    const [errors, setErrors] = useState([]);
+    const [isSubmit, setIsSubmit] = useState(false);
 
     const updateName = (e)=>setName(e.target.value);
     const updateDesc = (e)=>setDesc(e.target.value);
@@ -88,7 +90,15 @@ const BusinessDetail = () => {
             lat,
             lng,
             userId:user.id
-        }));
+        })).then(()=>{
+            setIsSubmit(true);
+            setErrors([]);
+          })
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+            setIsSubmit(false);
+          });
         setEditId(-1);
     }
 
@@ -135,6 +145,11 @@ const BusinessDetail = () => {
                     )}
                     {(editId === business.id)&& (
                     <>
+                        <div>
+                            <ul>
+                                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                            </ul>
+                        </div>
                         <div className="business_detail_name">
                             <input
                                 value={business.name} 
