@@ -54,35 +54,6 @@ function ReviewFormPage({reviewId,business,rating,setRating,setRate,showMessage}
 
     return (
     <div>
-        {/* <form onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error,idx)=><li key={idx}>{error}</li>)}
-            </ul>
-            <label>
-                Choose a rating
-                <input
-                    type="number"
-                    placeholder="3"
-                    min="1"
-                    max="5"
-                    required
-                    value={rating}
-                    onChange={updateRating}
-                />
-            </label>
-            <label>
-                Write a review
-                <textarea 
-                    rows="5" 
-                    cols='33'
-                    required
-                    value={contents}
-                    onChange={updateContents}
-                />
-            </label>
-            <button type="submit">Submit</button>
-        </form> */}
-
         <form name="reviewform" className="reviewform" onSubmit={handleSubmit}>
             <input type="hidden" name="rate" id="rate" value="0"/>
             <p className="title_star">Please share your review</p>
@@ -97,7 +68,7 @@ function ReviewFormPage({reviewId,business,rating,setRating,setRate,showMessage}
                 />
             </div>   
             <div className="cmd">
-                <input type="submit" name="save" id="save" value="Write" />
+                <button name="save" id="save"> Write </button>
             </div>
         </form>
     </div>

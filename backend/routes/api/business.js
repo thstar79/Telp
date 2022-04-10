@@ -5,7 +5,6 @@ const {Business} = require('../../db/models');
 const {Review} = require('../../db/models');
 
 router.get('/',asyncHandler(async (req,res)=>{
-    console.log("여기는 business ALL");
     const businesses = await Business.findAll();
 
     return res.json({
@@ -14,7 +13,6 @@ router.get('/',asyncHandler(async (req,res)=>{
 }));
 
 router.get('/:id(\\d+)',asyncHandler(async (req,res)=>{
-    console.log("여기는 business get One");
     const id = parseInt(req.params.id,10);;
     const business = await Business.findByPk(id);
 
@@ -47,19 +45,18 @@ router.delete('/:id(\\d+)', async(req, res) => {
 });
 
 router.patch('/:id(\\d+)', async(req,res)=>{
-    console.log(req.cookies);
     const id = parseInt(req.params.id,10);
     const business = await Business.findByPk(id);
-    console.log(business,"!+++++++++++++++++++++");
     if(business) {
         business.description = req.body.description;
+        business.address = req.body.address;
+        business.city = req.body.city;
+        business.state = req.body.state;
         business.zip_code = req.body.zip_code;
         await business.save();
-        console.log("Success update");
         res.json({message:"Success",business});
     }
     else{
-        console.log("Failed update");
         res.json({message: "Could not find review please try again."});
     }
 });

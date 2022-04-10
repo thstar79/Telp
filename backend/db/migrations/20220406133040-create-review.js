@@ -18,19 +18,23 @@ module.exports = {
       },
       userId: {
         allowNull: false,
+        references: {model:"Users"},
         type: Sequelize.INTEGER
       },
       businessId: {
         allowNull: false,
+        references: {model:"Businesses"},
         type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       }
     });
   },

@@ -47,6 +47,7 @@ module.exports = {
       },
       userId: {
         allowNull: false,
+        references: {model:"Users"},
         type: Sequelize.INTEGER
       },
       operationId: {
@@ -54,11 +55,13 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       }
     });
   },

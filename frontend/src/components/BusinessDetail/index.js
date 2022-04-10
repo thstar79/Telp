@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getOneBusiness,editDBBusiness,delDBBusiness } from "../../store/business";
 import ReviewFormPage from "../ReviewFormPage";
 import BusinessReviews from "../BusinessReviews";
-//import EditBusinessForm from "./EditBusinessForm";
+import './BusinessDetail.css';
 
 const BusinessDetail = () => {
   
@@ -13,10 +13,7 @@ const BusinessDetail = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const business = useSelector((state) => state.business[businessId]);
-  console.log("BUSINESS DETAIL",businessId, business);
   
-  const [showEditBusinessForm, setShowEditBusinessForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
   const [editReviewId, setEditReviewId] = useState(null);
   const lat = 0;
   const lng = 0;
@@ -66,155 +63,132 @@ const showMessage = (type) => {
     }
 }
 
-useEffect(() => {
-    setShowEditBusinessForm(false);
-    setShowEditForm(false);
-    setEditReviewId(null);
-    dispatch(getOneBusiness(businessId));
-  }, [businessId, dispatch]);
+    useEffect(() => {
+        setEditReviewId(null);
+        dispatch(getOneBusiness(businessId));
+    }, [businessId, dispatch]);
 
-  if (!business) {
+    if (!business) {
     return null;
-  }
-  const handleSubmit = async (e) =>{
-    e.preventDefault();
-    console.log("handle submit");
-    dispatch(editDBBusiness({
-      id:businessId,
-      name,
-      description:desc,
-      image,
-      address,
-      city,
-      state,
-      zip_code,
-      lat,
-      lng,
-      userId:user.id
-    }));
-    setEditId(-1);
-}
+    }
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+        console.log("handle submit");
+        dispatch(editDBBusiness({
+            id:businessId,
+            name,
+            description:desc,
+            image,
+            address,
+            city,
+            state,
+            zip_code,
+            lat,
+            lng,
+            userId:user.id
+        }));
+        setEditId(-1);
+    }
 
-const editBusiness = async (business) => {
-    console.log("고치실래요?", business.id);
-    setEditId(business.id);
-    setName(user.id);
-    setDesc(business.description);
-    setImage(business.image);
-    setAddress(business.address);
-    setCity(business.city);
-    setState(business.state);
-    setZipcode(business.zip_code);
-}
-const deleteBusiness = async (business) => {
-  console.log("지우실래요? ", business.id )
-  dispatch(delDBBusiness(business));
-  history.push('/business');
-}
+    const editBusiness = async (business) => {
+        console.log("고치실래요?", business.id);
+        setEditId(business.id);
+        setName(user.id);
+        setDesc(business.description);
+        setImage(business.image);
+        setAddress(business.address);
+        setCity(business.city);
+        setState(business.state);
+        setZipcode(business.zip_code);
+    }
+    const deleteBusiness = async (business) => {
+        console.log("지우실래요? ", business.id )
+        dispatch(delDBBusiness(business));
+        history.push('/business');
+    }
 
-  let content = null;
+    let content = (
+        <div className="business-detail-container">
+            <div className="top_business_detail">
+                <div className="top_business_detail_image" style={{backgroundImage: "url(" + business.image + ")"}} />
+                <div>
+                    {editId !== business.id && (
+                    <>
+                    <div className="business_detail_name">
+                        {business.name}
+                    </div>
+                    <div className="business_detail_desc">
+                        {business.description}
+                    </div>
+                    <div className="business_detail_address">
+                        <b>Address</b> {business.address}
+                    </div>
+                    <div className="business_detail_city">
+                        <b>City</b> {business.city}
+                    </div>
+                    <div className="business_detail_zip">
+                        <b>Zip Code</b>{business.zip_code}
+                    </div>
+                    </>
+                    )}
+                    {(editId === business.id)&& (
+                    <>
+                        <div className="business_detail_name">
+                            <input
+                                value={business.name} 
+                                onChange={updateName}
+                                style={{ border: "none", backgroundColor: "transparent"}} disabled
+                            />
+                        </div>
+                        <div>
+                            <textarea
+                                className="update_desc"
+                                value={desc} 
+                                onChange={updateDesc}
+                            />
+                        </div>
+                        <div>
+                            <input
+                                className="update_addr"
+                                value={address} 
+                                onChange={updateAddress}
+                            />
+                        </div>
+                        <div>
+                            <input
+                                className="update_city"
+                                value={city} 
+                                onChange={updateCity}
+                            />
+                        </div>
+                        <div>
+                            <input
+                                className="zip_code"
+                                value={zip_code} 
+                                onChange={updateZipcode}
+                            />
+                        </div>
+                    </>)}
+                    {editId === business.id && (
+                        <div>
+                            <button onClick={(e)=>handleSubmit(e)}>Update</button>
+                        </div>
+                    )}
+                    
+                    {(business.userId === user.id && editId === -1)  && (
+                        <div className="business_btns">
+                            <button onClick={()=>editBusiness(business)}>Edit</button>
+                            <button onClick={()=>deleteBusiness(business)}>Delete</button>
+                        </div>
+                    )}
+                </div>
+            </div>
 
-    content = (
-        <div className="business-detail-lists">
-        <div>
-          <h2>Information</h2>
-          <ul>
-            {editId !== business.id && (
-              <>
-            <li>
-              <img src={business.image} width="100px"/>
-            </li>
-            <li>
-                <b>Number</b> {business.name}
-            </li>
-            <li>
-                <b>Description</b> {business.description}
-            </li>
-            <li>
-                <b>Address</b> {business.address}
-            </li>
-            <li>
-                <b>City</b> {business.city}
-            </li>
-            <li>
-                <b>Zip Code</b>{business.zip_code}
-            </li>
-            </>
-            )}
-            {(editId === business.id)&& (
-            <>
-                <li>
-                  <img src={business.image} width="100px"/>
-                </li>
-                <li>
-                    <input
-                        value={business.name} 
-                        onChange={updateName}
-                        style={{ border: "none", backgroundColor: "transparent"}} disabled
-                    />
-                </li>
-                <li>
-                    <input
-                        value={desc} 
-                        onChange={updateDesc}
-                    />
-                </li>
-                <li>
-                <input
-                        value={address} 
-                        onChange={updateAddress}
-                    />
-                </li>
-                <li>
-                <input
-                        value={city} 
-                        onChange={updateCity}
-                    />
-                </li>
-                <li>
-                <input
-                        value={zip_code} 
-                        onChange={updateZipcode}
-                    />
-                </li>
-            </>)}
-            {editId === business.id && (
-                <li>
-                    <button onClick={(e)=>handleSubmit(e)}>Update</button>
-                </li>
-            )}
-            
-            {(business.userId === user.id && editId === -1)  && (
-                <li>
-                    <button onClick={()=>editBusiness(business)}>Edit</button>
-                </li>
-            )}
-            {(business.userId === user.id && editId === -1) && (
-                <li>
-                    <button onClick={()=>deleteBusiness(business)}>Delete</button>
-                </li>
-            )}
-            </ul>
-        </div>
-
-        <div>
-            <h2>
-            Reviews
-            </h2>
-            <table>
-                <thead>
-                    <tr>
-                    <th>contents</th>
-                    <th>userId</th>
-                    <th>rating</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <BusinessReviews business={business} rating={rating} setRating={setRating} setRate={setRate} showMessage={showMessage} />
-                </tbody>
-            </table>
-            <ReviewFormPage reviewId={editReviewId} business={business} rating={rating} setRating={setRating} setRate={setRate} showMessage={showMessage} />
-        </div>
+            <div className="review_container">
+                <h2>Reviews</h2>
+                <BusinessReviews business={business} rating={rating} setRating={setRating} setRate={setRate} showMessage={showMessage} />
+                <ReviewFormPage reviewId={editReviewId} business={business} rating={rating} setRating={setRating} setRate={setRate} showMessage={showMessage} />
+            </div>
         </div>
     );
 

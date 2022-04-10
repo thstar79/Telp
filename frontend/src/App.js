@@ -21,30 +21,34 @@ function App() {
     <>
     <Top isLoaded={isLoaded} />
     {isLoaded && (
-      <div className='Main'>
-        <Switch>
-          <Route exact path="/">
-            <BusinessHome />
-          </Route>
-          <Route path='/login'>
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route path="/business/signup">
-            <BusinessSignupFormPage />
-          </Route>
-          <Route exact path='/business'>
-            <BusinessHome />
-          </Route>
-          <Route path="/business/:businessId">
-            <BusinessDetail />
-          </Route>
-          <Route>
-            404 Error
-          </Route>
-        </Switch>
+      <div className="main">
+        <div className='main-left'></div>
+        <div className='main-center'>
+          <Switch>
+            <Route exact path="/">
+              <BusinessHome />
+            </Route>
+            <Route path='/login'>
+              <LoginFormPage />
+            </Route>
+            <Route path="/signup">
+              <SignupFormPage />
+            </Route>
+            <Route path="/business/signup">
+              <BusinessSignupFormPage />
+            </Route>
+            <Route exact path='/business'>
+              <BusinessHome />
+            </Route>
+            <Route path="/business/:businessId">
+              <BusinessDetail />
+            </Route>
+            <Route>
+              404 Error
+            </Route>
+          </Switch>
+        </div>
+        <div className='main-right'></div>
       </div>
     )}
     </>

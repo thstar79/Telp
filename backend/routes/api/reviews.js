@@ -8,6 +8,8 @@ router.get('/', async(req,res)=>{
     const reviews = await Review.findAll({
         include: [User,Business],
     });
+    console.log(reviews[0].User);
+    console.log(reviews[0]);
     res.json({reviews});
 });
 

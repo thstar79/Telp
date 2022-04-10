@@ -1,0 +1,55 @@
+.business-detail-container > .top_business_detail{
+    display: flex;
+    flex-direction: column;
+}
+
+.top_business_detail > div{
+    margin:50px;
+}
+
+.top_business_detail_image{
+    height:400px;
+}
+
+.business_detail_name{
+    font-size:40px;
+    font-weight: bold;
+    color: black;
+}
+
+.business_detail_desc{
+    margin-top: 40px;
+    height: 100px;
+}
+
+.business_detail_address{
+    margin-top: 40px;
+    height: 50px;
+    margin: 0;
+}
+
+.business_detail_city{
+    margin-top: 40px;
+    height: 30px;
+    margin: 0;
+}
+
+.business_detail_state{
+    margin-top: 40px;
+    height: 30px;
+    margin: 0;
+}
+
+.update_desc{
+    overflow: hidden;
+    width: 800px;
+    height: 100px;
+}
+
+.update_addr{
+    width:400px;
+}
+
+.business_btns{
+    padding:20px;
+}

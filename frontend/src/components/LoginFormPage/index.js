@@ -25,6 +25,14 @@ function LoginFormPage() {
       });
   }
 
+  const demoSubmit = (e) => {
+    e.preventDefault();
+    setCredential("demo@user.io");
+    setPassword("password");
+    //console.log("!!!!!!!!!!!!!!!!!!!!!!", credential, password,"!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    //return dispatch(sessionActions.login({ credential, password }));
+  }
+
   return (
     <>
     <form onSubmit={handleSubmit}>
@@ -32,7 +40,7 @@ function LoginFormPage() {
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
       <label>
-        Username or Email
+        Email
         <input
           type="text"
           value={credential}
@@ -50,6 +58,9 @@ function LoginFormPage() {
         />
       </label>
       <button type="submit">Log In</button>
+    </form>
+    <form>
+      <button type="submit" onClick={(e)=>demoSubmit(e)} >Demo</button>
     </form>
     </>
   );
