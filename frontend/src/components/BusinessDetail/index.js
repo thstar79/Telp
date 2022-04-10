@@ -66,7 +66,7 @@ const BusinessDetail = () => {
     }
 
     useEffect(() => {
-        setCBusiness(business);
+        // setCBusiness(business);
         setEditReviewId(null);
         dispatch(getOneBusiness(businessId));
     }, [cbusiness, user, dispatch]);

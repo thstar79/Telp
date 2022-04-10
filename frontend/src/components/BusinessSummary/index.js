@@ -18,7 +18,7 @@ function BusinessSummary({business, reviewInfo}) {
             <div className="business_name">{business.name}</div>
             <div className="business_rating">Number of Reviews : {reviewInfo.numReviews}</div>
             <DisplayStars rating={reviewInfo.avgRating} id={business.id}>{reviewInfo.numReviews}</DisplayStars>
-            <div className="primary-text">{business.zip_code}</div>
+            <div className="primary-text">{business.address}</div>
             <div className="primary-text">{business.state}</div>
             <div className="primary-text">{business.city}</div>
         {(reviewInfo !== undefined) && (
