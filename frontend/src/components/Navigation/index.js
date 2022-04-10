@@ -17,10 +17,10 @@ function Navigation({isLoaded}){
         sessionLinks = (
             <>
                 <li>
-                    <NavLink to='/login' style={{color: 'white', textDecoration: 'none'}} activeStyle={{color: 'red', textDecoration: 'none'}}>Log In</NavLink>
+                    <NavLink to='/login' style={{color: '#ffff99', textDecoration: 'none', width:"100px"}} activeStyle={{color: 'red', textDecoration: 'none'}}>Log In</NavLink>
                 </li>
                 <li>
-                    <NavLink to='/signup'  style={{color: 'white', textDecoration: 'none'}} activeStyle={{color: 'red', textDecoration: 'none'}}>Sign Up</NavLink>
+                    <NavLink to='/signup'  style={{color: '#ffff99', textDecoration: 'none', width:"100px"}} activeStyle={{color: 'red', textDecoration: 'none'}}>Sign Up</NavLink>
                 </li>
             </>
         );
@@ -28,13 +28,13 @@ function Navigation({isLoaded}){
 
     return (
         <div className='topMenu'>
-            <ul>
+            <ul className="top_ul">
                 {isLoaded && sessionLinks}
                 <li>
-                    <NavLink exact to="/business" style={{color: 'white', textDecoration: 'none'}} activeStyle={{color: 'red', textDecoration: 'none'}}>Home</NavLink>
+                    <NavLink exact to="/business" style={{color: '#ffff99', textDecoration: 'none', width:"100px"}} activeStyle={{color: 'red', textDecoration: 'none'}}>Home</NavLink>
                 </li>
                 <li>
-                    <NavLink to='/business/signup' style={{color: 'white', textDecoration: 'none'}} activeStyle={{color: 'red', textDecoration: 'none'}}>Register a Business</NavLink>
+                    <NavLink to='/business/signup' style={{color: '#ffff99', textDecoration: 'none', width:"100px"}} activeStyle={{color: 'red', textDecoration: 'none'}}>Register a Business</NavLink>
                 </li>
             </ul>
         </div>

@@ -45,7 +45,6 @@ app.use((req, res, next)=>{
     err.title = "Resource Not Found";
     err.errors = ["The requested resource couldn't be found."];
     err.status = 404;
-    console.log("there");
     next(err);
 });
 
@@ -58,7 +57,6 @@ app.use((err, req,res, next)=>{
 });
 
 app.use((err, req, res, next)=>{
-    console.log("here");
     res.status(err.status || 500);
     console.error(err);
     res.json({

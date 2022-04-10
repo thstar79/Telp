@@ -36,11 +36,11 @@ router.delete('/:id(\\d+)', async(req, res) => {
     const business = await Business.findByPk(id);
     if(business){
         await business.destroy();
-        res.json({message: "success"});
+        return res.json({message: "success"});
     }
     else{
         errors.push('Business is not in database');
-        res.json({message: "business failure"});
+        return res.json({message: "business failure"});
     }
 });
 
@@ -61,8 +61,10 @@ router.patch('/:id(\\d+)', async(req,res)=>{
     }
 });
 
-router.get('/:id/reviews', asyncHandler(async (req,res)=>{
+router.get('/:id(\\d+)/reviews', asyncHandler(async (req,res)=>{
+    
     const businessId = parseInt(req.params.id,10);
+    console.log("here there 전에 여기 들어와야 되는거 아닌가", businessId)
     const reviews = await Review.findAll({
         where: {
             businessId,

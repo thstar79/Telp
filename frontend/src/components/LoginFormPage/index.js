@@ -42,7 +42,7 @@ function LoginFormPage() {
       <label>
         Email
         <input
-          type="text"
+          type="email"
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
           required

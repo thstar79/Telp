@@ -26,7 +26,7 @@ router.post('/',asyncHandler(async (req,res)=>{
     const validatorErrors = validationResult(req);
     if(validatorErrors.isEmpty()) {
         await review.save();
-        res.json({message:"success", review});
+        return res.json({message:"success", review});
     }
     else{
         const errors = validatorErrors.array().map((error)=>error.msg);
@@ -37,13 +37,14 @@ router.post('/',asyncHandler(async (req,res)=>{
 router.delete('/:id(\\d+)', async(req, res) => {
     const id = parseInt(req.params.id,10);
     const review = await Review.findByPk(id);
+    console.log("I am in delete review",id);
     if(review){
         await review.destroy();
-        res.json({message: "success"});
+        return res.json({message: "success"});
     }
     else{
         errors.push('Review is not in database');
-        res.json({message: "review failure"});
+        return res.json({message: "review failure"});
     }
 });
 
@@ -57,11 +58,11 @@ router.put('/:id(\\d+)', async(req,res)=>{
         review.rating = req.body.rating;
         await review.save();
         console.log("Success update");
-        res.json({message:"Success",review});
+        return res.json({message:"Success",review});
     }
     else{
         console.log("Failed update");
-        res.json({message: "Could not find review please try again."});
+        return res.json({message: "Could not find review please try again."});
     }
 });
 

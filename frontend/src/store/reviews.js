@@ -96,13 +96,12 @@ export const delDBReview = (review) => async dispatch => {
         method: "DELETE",
     });
     if(res.ok) {
-        const result = await res.json();
+        await res.json();
         dispatch(remove(review.id,review.businessId));
-        return result;
     }
     else{
         const err = await res.json();
-        console.log(err);
+        console.error(err);
     }
 };
 
@@ -118,8 +117,8 @@ const reviewsReducer = (state=initialState,action) => {
             });
             return {...state, ...newReviews};
         case REMOVE_REVIEW:
-            //const newState = {...state};
-            const newState = Object.assign({},state);
+            const newState = {...state};
+            //const newState = Object.assign({},state);
             delete newState[action.reviewId];
             return newState;
         case UPDATE_REVIEW:

@@ -28,12 +28,6 @@ function BusinessSignupFormPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(businessActions.editDBBusiness({name,description:desc,image,address,city,state,zip_code,lat,lng,userId:sessionUser.id},0));
-    // .catch(async (res) => {
-    //     const data = await res.json();
-    //     if (data && data.errors) setErrors(data.errors);
-    // });
-    console.log("리다이렉트 직전");
-    //
     history.push('/business');
   };
 

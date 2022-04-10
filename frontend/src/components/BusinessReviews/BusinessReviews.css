@@ -10,6 +10,7 @@
 
 .review_contents1 > textarea{
     width: 800px;
+    height: 200px;
     padding: 10px;
     box-sizing: border-box;
     overflow: hidden;

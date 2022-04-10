@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch,useSelector } from "react-redux";
-import { useParams, useHistory,Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { getAllReviews,editDBReview } from "../../store/reviews";
 import StarRating from "../StarRating";
 import './ReviewFormPage.css';
@@ -10,7 +10,6 @@ function ReviewFormPage({reviewId,business,rating,setRating,setRate,showMessage}
     let review = useSelector((state)=>state.reviews[reviewId]);
     const user = useSelector((state)=>state.session.user);
     const dispatch = useDispatch();
-    const history = useHistory();
     
     const [contents,setContents] = useState("Write a review");
     const [errors, setErrors] = useState([]);
@@ -54,31 +53,51 @@ function ReviewFormPage({reviewId,business,rating,setRating,setRate,showMessage}
 
     return (
     <div>
-        <form name="reviewform" className="reviewform" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
+            <ul>
+                {errors.map((error,idx)=><li key={idx}>{error}</li>)}
+            </ul>
+            <label>
+                Choose a rating
+                <input
+                    type="number"
+                    placeholder="3"
+                    min="1"
+                    max="5"
+                    required
+                    value={rating}
+                    onChange={updateRating}
+                />
+            </label>
+            <label>
+                Write a review
+                <textarea 
+                    rows="5" 
+                    cols='33'
+                    required
+                    value={contents}
+                    onChange={updateContents}
+                />
+            </label>
+            <button type="submit">Submit</button>
+        </form>
+
+        <form name="reviewform" class="reviewform" onSubmit={handleSubmit}>
             <input type="hidden" name="rate" id="rate" value="0"/>
-            <p className="title_star">Please share your review</p>
+            <p class="title_star">Please share your review</p>
             <StarRating rating={rating} setRating={setRating} setRate={setRate} />
-            <div className="review_contents">
-                <div className="warning_msg">Review should be longer than 5 letters</div>
+            <div class="review_contents">
+                <div class="warning_msg">Review should be longer than 5 letters</div>
                 <textarea 
                     rows="10" 
-                    className="review_textarea"
+                    class="review_textarea"
                     value={contents}
                     onChange={updateContents}
                 />
             </div>   
-            {user && (
-            <div className="cmd">
-                <button name="save" id="save"> Write </button>
+            <div class="cmd">
+                <input type="submit" name="save" id="save" value="Write" />
             </div>
-            )}
-            {!user && (
-            <div className="cmd">
-                <Link to="/login">
-                    <input type='button' value="Login" />
-                </Link>
-            </div>
-            )}
         </form>
     </div>
     );

@@ -10,6 +10,7 @@ const BusinessHome = ()=>{
     const business = useSelector(state => {
       return state.business.list;
     });
+    const [cbusiness,setCBusiness] = useState(business);
 
     const reviews = useSelector(state=>{
       const reviews = state.reviews;
@@ -25,7 +26,9 @@ const BusinessHome = ()=>{
       for(let i=0;i<keys.length;++i){
         const idx = keys[i];
         if(reviews[idx].businessId === businessId){
-          if(!firstReview)  firstReview = reviews[idx];
+          if(!firstReview){
+            firstReview = reviews[idx];
+          }  
           numReviews++;
           avgRating += reviews[idx].rating;
         }
@@ -34,12 +37,11 @@ const BusinessHome = ()=>{
       return {firstReview,numReviews,avgRating};
     }
 
-    console.log(business,"******************");
     useEffect(()=>{
-        console.log("useeffect inside");
-        dispatch(getBusiness());
-        dispatch(loadReviews());
-    },[dispatch])
+      setCBusiness(cbusiness);
+      dispatch(getBusiness());
+      dispatch(loadReviews());
+    },[cbusiness,dispatch])
     
     
     if (!business) {
@@ -50,13 +52,15 @@ const BusinessHome = ()=>{
         <>
           <nav>
             {business.map((business) => {
-              const reviewInfo = getReviewInfo(business.id);
+              // console.log(business.id);
+              if(business !== undefined){
+                const reviewInfo = getReviewInfo(business.id);
               return (
                 <NavLink key={business.id} to={`/business/${business.id}`}>
                   <BusinessSummary business={business} reviewInfo={reviewInfo} />
                 </NavLink>
               );
-            })}
+            }})}
           </nav>
         </>
     );

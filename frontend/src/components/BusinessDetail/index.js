@@ -10,10 +10,12 @@ const BusinessDetail = () => {
   
   const user = useSelector((state)=>state.session.user);
   const { businessId } = useParams();
+  console.log("Business Detail", businessId);
   const dispatch = useDispatch();
   const history = useHistory();
   const business = useSelector((state) => state.business[businessId]);
   
+  const [cbusiness,setCBusiness] = useState(business);
   const [editReviewId, setEditReviewId] = useState(null);
   const lat = 0;
   const lng = 0;
@@ -64,16 +66,16 @@ const showMessage = (type) => {
 }
 
     useEffect(() => {
+        setCBusiness(business);
         setEditReviewId(null);
         dispatch(getOneBusiness(businessId));
-    }, [businessId, dispatch]);
+    }, [cbusiness, dispatch]);
 
     if (!business) {
         return null;
     }
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        console.log("handle submit");
         dispatch(editDBBusiness({
             id:businessId,
             name,
@@ -91,7 +93,6 @@ const showMessage = (type) => {
     }
 
     const editBusiness = async (business) => {
-        console.log("고치실래요?", business.id);
         setEditId(business.id);
         setName(user.id);
         setDesc(business.description);
@@ -102,12 +103,11 @@ const showMessage = (type) => {
         setZipcode(business.zip_code);
     }
     const deleteBusiness = async (business) => {
-        console.log("지우실래요? ", business.id )
         dispatch(delDBBusiness(business));
         history.push('/business');
     }
 
-    let content = (
+    let comInfo = (
         <div className="business-detail-container">
             <div className="top_business_detail">
                 <div className="top_business_detail_image" style={{backgroundImage: "url(" + business.image + ")"}} />
@@ -126,8 +126,11 @@ const showMessage = (type) => {
                     <div className="business_detail_city">
                         <b>City</b> {business.city}
                     </div>
+                    <div className="business_detail_state">
+                        <b>State</b> {business.state}
+                    </div>
                     <div className="business_detail_zip">
-                        <b>Zip Code</b>{business.zip_code}
+                        <b>Zipcode</b>{business.zip_code}
                     </div>
                     </>
                     )}
@@ -159,6 +162,13 @@ const showMessage = (type) => {
                                 className="update_city"
                                 value={city} 
                                 onChange={updateCity}
+                            />
+                        </div>
+                        <div>
+                            <input
+                                className="update_state"
+                                value={state} 
+                                onChange={updateState}
                             />
                         </div>
                         <div>
@@ -200,7 +210,7 @@ const showMessage = (type) => {
           style={{ backgroundImage: `${business.image}` }}
         ></div>
       </div>
-      {content}
+      {comInfo}
     </div>
   );
 };

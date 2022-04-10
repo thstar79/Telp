@@ -11,6 +11,7 @@ const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
     const [contents,setContents] = useState("Write a review");
     const [reviewId, setReviewId] = useState();
     const [editId, setEditId] = useState(-1);
+    const [isSubmit, setIsSubmit] = useState(false);
 
     const user = useSelector((state)=>state.session.user);
     let reviews = useSelector((state)=>{
@@ -32,14 +33,15 @@ const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
     const updateContents = (e)=>setContents(e.target.value);
 
     useEffect(()=>{
-        setCBusiness(business);
         dispatch(getAllReviews(cbusiness.id));
-    },[business.id,dispatch]);
+        setIsSubmit(false);
+    },[business.id,isSubmit,dispatch]);
 
     if(!reviews) return null;
     
     const handleSubmit = async (e) =>{
         e.preventDefault();
+        setIsSubmit(true);
         const payload = {
             id: reviewId,
             rating,

@@ -138,13 +138,10 @@ const businessReducer = (state=initialState, action) => {
             const allBusiness = {};
             console.log("ACTIOn ", action.list.businesses);
             action.list.businesses.forEach((business)=>{
-                console.log(business,"@@@@@@@");
                 allBusiness[business.id] = business;
-                console.log(allBusiness);
             });
             return {...allBusiness,...state,list: action.list.businesses};
         case LOAD_REVIEWS:
-            console.log("444444444444444444444444444444444444444444444444");
             return {
                 ...state,
                 [action.businessId]: {
@@ -155,15 +152,15 @@ const businessReducer = (state=initialState, action) => {
                     }),
                 },
             };
-        case REMOVE_REVIEW:
-            return {
-                ...state,
-                [action.businessId]: {
-                    reviews: state[action.businessId].reviews.filter(
-                        (reviewId) => reviewId !== action.reviewId
-                    ),
-                }
-            }
+        // case REMOVE_REVIEW:
+        //     return {
+        //         ...state,
+        //         [action.businessId]: {
+        //             reviews: state[action.businessId].reviews.filter(
+        //                 (reviewId) => reviewId !== action.reviewId
+        //             ),
+        //         }
+        //     }
         case ADD_REVIEW:
             return {
                 ...state,

@@ -2,6 +2,12 @@ import './BusinessSummary.css';
 import DisplayStars from '../DisplayStars';
 
 function BusinessSummary({business, reviewInfo}) {
+    let contents;
+    if(reviewInfo){
+        if(reviewInfo.firstReview){
+            contents=reviewInfo.firstReview.contents.substring(0,250);
+        }
+    }
     return (
     <div className="summary">
         <div className="summary_left">
@@ -24,7 +30,7 @@ function BusinessSummary({business, reviewInfo}) {
                     {reviewInfo.firstReview.rating} 
                 </div>
                 <div className="firstreview_contents">
-                    {reviewInfo.firstReview.contents}
+                    {contents}
                 </div>
             </div>
             )
