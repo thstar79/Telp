@@ -69,7 +69,7 @@ const showMessage = (type) => {
     }, [businessId, dispatch]);
 
     if (!business) {
-    return null;
+        return null;
     }
     const handleSubmit = async (e) =>{
         e.preventDefault();
@@ -169,13 +169,13 @@ const showMessage = (type) => {
                             />
                         </div>
                     </>)}
-                    {editId === business.id && (
+                    {(editId === business.id) && (
                         <div>
                             <button onClick={(e)=>handleSubmit(e)}>Update</button>
                         </div>
                     )}
                     
-                    {(business.userId === user.id && editId === -1)  && (
+                    {(user !== undefined) && (business.userId === user.id && editId === -1)  && (
                         <div className="business_btns">
                             <button onClick={()=>editBusiness(business)}>Edit</button>
                             <button onClick={()=>deleteBusiness(business)}>Delete</button>

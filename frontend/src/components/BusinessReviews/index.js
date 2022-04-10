@@ -9,10 +9,8 @@ const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
     
     const [cbusiness,setCBusiness] = useState(business);
     const [contents,setContents] = useState("Write a review");
-    const [userId,setUserId] = useState(3);
     const [reviewId, setReviewId] = useState();
     const [editId, setEditId] = useState(-1);
-    const [isSubmit, setIsSubmit] = useState(false);
 
     const user = useSelector((state)=>state.session.user);
     let reviews = useSelector((state)=>{
@@ -31,19 +29,17 @@ const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
     console.log(business,"REVIEWS44");
     const dispatch = useDispatch();
     const updateRating = (e)=>setRating(e.target.value);
-    const updateUserId = (e)=>setUserId(e.target.value);
     const updateContents = (e)=>setContents(e.target.value);
 
     useEffect(()=>{
+        setCBusiness(business);
         dispatch(getAllReviews(cbusiness.id));
-        setIsSubmit(false);
-    },[business.id,isSubmit,dispatch]);
+    },[business.id,dispatch]);
 
     if(!reviews) return null;
     
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        setIsSubmit(true);
         const payload = {
             id: reviewId,
             rating,
@@ -56,7 +52,6 @@ const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
     }
 
     const editReview = async (review) => {
-        setUserId(user.id);
         setEditId(review.id);
         setReviewId(review.id);
         setContents(review.contents);
@@ -68,8 +63,6 @@ const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
     }
 
     return reviews.map((review)=>(
-        <>
-        {/* <ReviewUnit review={review} /> */}
         <div key={review.id} className="reviewUnit">
             {(editId !== review.id) && (
             <>
@@ -109,21 +102,20 @@ const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
                     />
                 </div>
             </>)}
-            
+        
             {(editId === review.id) && (
                 <div>
                     <button onClick={(e)=>handleSubmit(e)}>Update</button>
                 </div>
             )}
-            
-            {(review.userId === user.id && editId === -1)  && (
+        
+            {(user!==undefined) && (review.userId === user.id && editId === -1)  && (
                 <div>
                     <button onClick={()=>editReview(review)}>Edit</button>
                     <button onClick={()=>deleteReview(review)}>Delete</button>
                 </div>
             )}
         </div>
-        </>
     ));
 };
 

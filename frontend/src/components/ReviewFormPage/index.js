@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch,useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory,Link } from "react-router-dom";
 import { getAllReviews,editDBReview } from "../../store/reviews";
 import StarRating from "../StarRating";
 import './ReviewFormPage.css';
@@ -67,9 +67,18 @@ function ReviewFormPage({reviewId,business,rating,setRating,setRate,showMessage}
                     onChange={updateContents}
                 />
             </div>   
+            {user && (
             <div className="cmd">
                 <button name="save" id="save"> Write </button>
             </div>
+            )}
+            {!user && (
+            <div className="cmd">
+                <Link to="/login">
+                    <input type='button' value="Login" />
+                </Link>
+            </div>
+            )}
         </form>
     </div>
     );

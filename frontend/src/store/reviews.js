@@ -116,22 +116,16 @@ const reviewsReducer = (state=initialState,action) => {
             action.reviews.forEach((review)=>{
                 newReviews[review.id] = review;
             });
-            console.log("33333333333333333333333333333333");
-            console.log("STATE입니다.", newReviews);
             return {...state, ...newReviews};
         case REMOVE_REVIEW:
             //const newState = {...state};
             const newState = Object.assign({},state);
-            console.log("PREV STATE : ", newState);
             delete newState[action.reviewId];
-            console.log("POST STATE : ", newState);
             return newState;
         case UPDATE_REVIEW:
-            console.log("PPPPPPPPPPPPPPPPPP");
             console.log(action);
             return {...state, [action.review.id]: action.review}
         default:
-            console.log("여기를 들어와야 할 것 같은데....");
             return state;
     }
 }
