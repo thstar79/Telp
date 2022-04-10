@@ -8,62 +8,62 @@ import './BusinessDetail.css';
 
 const BusinessDetail = () => {
   
-  const user = useSelector((state)=>state.session.user);
-  const { businessId } = useParams();
-  console.log("Business Detail", businessId);
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const business = useSelector((state) => state.business[businessId]);
-  
-  const [cbusiness,setCBusiness] = useState(business);
-  const [editReviewId, setEditReviewId] = useState(null);
-  const lat = 0;
-  const lng = 0;
-  const [name, setName] = useState("");
-  const [desc,setDesc] = useState("");
-  const [image,setImage] = useState("");
-  const [address, setAddress] = useState();
-  const [city, setCity] = useState();
-  const [state, setState] = useState();
-  const [zip_code, setZipcode] = useState();
-  const [rating, setRating] = useState(0);
-  const [editId, setEditId] = useState(-1);
+    const user = useSelector((state)=>state.session.user);
+    const { businessId } = useParams();
+    console.log("Business Detail", businessId);
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const business = useSelector((state) => state.business[businessId]);
 
-  const updateName = (e)=>setName(e.target.value);
-  const updateDesc = (e)=>setDesc(e.target.value);
-  const updateAddress = (e)=>setAddress(e.target.value);
-  const updateCity = (e)=>setCity(e.target.value);
-  const updateState = (e)=>setState(e.target.value);
-  const updateZipcode = (e)=>setZipcode(e.target.value);
+    const [cbusiness,setCBusiness] = useState(business);
+    const [editReviewId, setEditReviewId] = useState(null);
+    const lat = 0;
+    const lng = 0;
+    const [name, setName] = useState("");
+    const [desc,setDesc] = useState("");
+    const [image,setImage] = useState("");
+    const [address, setAddress] = useState();
+    const [city, setCity] = useState();
+    const [state, setState] = useState();
+    const [zip_code, setZipcode] = useState();
+    const [rating, setRating] = useState(0);
+    const [editId, setEditId] = useState(-1);
 
-  const setRate = (newrate) => {
-    setRating(newrate);
-    document.querySelector('.ratefill').style.width = parseInt(newrate * 60) + 'px';
-    let items = document.querySelectorAll('.rate_radio');
-    items.forEach(function(item, idx){
-        if(idx < newrate){
-            item.checked = true;
-        }else{
-            item.checked = false;
-        }
-    });
-}
-const showMessage = (type) => {
-    switch(type){
-        case 'rate':
-            document.querySelector('.review_rating .warning_msg').style.display = 'block';
-            setTimeout(function(){
-                document.querySelector('.review_rating .warning_msg').style.display = 'none';
-            },1000);            
-            break;
-        case 'review':
-            document.querySelector('.review_contents .warning_msg').style.display = 'block';
-            setTimeout(function(){
-                document.querySelector('.review_contents .warning_msg').style.display = 'none';
-            },1000);    
-            break;
+    const updateName = (e)=>setName(e.target.value);
+    const updateDesc = (e)=>setDesc(e.target.value);
+    const updateAddress = (e)=>setAddress(e.target.value);
+    const updateCity = (e)=>setCity(e.target.value);
+    const updateState = (e)=>setState(e.target.value);
+    const updateZipcode = (e)=>setZipcode(e.target.value);
+
+    const setRate = (newrate) => {
+        setRating(newrate);
+        document.querySelector('.ratefill').style.width = parseInt(newrate * 30) + 'px';
+        let items = document.querySelectorAll('.rate_radio');
+        items.forEach(function(item, idx){
+            if(idx < newrate){
+                item.checked = true;
+            }else{
+                item.checked = false;
+            }
+        });
     }
-}
+    const showMessage = (type) => {
+        switch(type){
+            case 'rate':
+                document.querySelector('.review_rating .warning_msg').style.display = 'block';
+                setTimeout(function(){
+                    document.querySelector('.review_rating .warning_msg').style.display = 'none';
+                },1000);            
+                break;
+            case 'review':
+                document.querySelector('.review_contents .warning_msg').style.display = 'block';
+                setTimeout(function(){
+                    document.querySelector('.review_contents .warning_msg').style.display = 'none';
+                },1000);    
+                break;
+        }
+    }
 
     useEffect(() => {
         setCBusiness(business);

@@ -2,9 +2,9 @@ function DisplayStars({rating,id}) {
     
     if(rating && id){
         const ratefill = document.getElementById("dsp"+id);
-        if(ratefill)    ratefill.style.width = parseInt(rating * 60) + 'px';
+        if(ratefill)    ratefill.style.width = parseInt(rating * 30) + 'px';
     }
-    console.log(rating,"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
     return (
     <div className="review_rating rating_point">
         <div className="rating">

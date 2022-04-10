@@ -40,8 +40,8 @@ h1{
     display: inline-block;
     z-index: 20;
     opacity: 0.001;
-    width: 60px;
-    height: 60px;
+    width: 30px;
+    height: 30px;
     background-color: #fff;
     cursor: pointer;
     vertical-align: top;
@@ -52,18 +52,18 @@ h1{
     display: block;
     float: left;
     z-index: 10;
-    width: 60px;
-    height: 60px;
+    width: 30px;
+    height: 30px;
     background-image: url(../../assets/image/starrate.png);
     background-repeat: no-repeat;
-    background-size: 60px 60px;
+    background-size: 30px 30px;
     cursor: pointer;
 }
 .rating .ratefill {
     /* background-color: #ff8; */
     background-color: orange;
     width: 0;
-    height: 60px;
+    height: 30px;
     position: absolute;
 }
 

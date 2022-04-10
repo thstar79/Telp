@@ -5,7 +5,9 @@
 
 .reviewUnit{
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin: 10px;
+    /* border:solid red; */
 }
 
 .review_contents1 > textarea{
@@ -16,16 +18,30 @@
     overflow: hidden;
 }
 
+.rating_date{
+    display:flex;
+    flex-direction: row;
+}
+
+.rating_date div{
+    padding:0px;
+}
+
+.rating_date .date1{
+    padding-left:30px;
+}
+
 button {
     margin: 0;
     padding: 0.5rem 1rem;
   
+    color:red;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 1rem;
-    font-weight: 400;
+    font-weight: 800;
     text-align: center;
     text-decoration: none;
-    background-color: red;
+    background-color: orange;
     display: inline-block;
     width: auto;
   
@@ -38,3 +54,67 @@ button {
       flex-direction: column;
       margin-left: 10%;
   }
+
+.wrap{
+    max-width: 480px;
+    margin: 0 auto; /* 화면 가운데로 */
+    background-color: #fff;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.reviewform {
+    display:flex;
+    flex-direction: column;
+}
+
+.reviewform textarea{
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.rating1 .rate_radio1 {
+    position: relative;
+    display: inline-block;
+    z-index: 20;
+    opacity: 0.001;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    cursor: pointer;
+    vertical-align: top;
+    display: none;
+}
+.rating1 .rate_radio1 + label {
+    position: relative;
+    display: block;
+    float: left;
+    z-index: 10;
+    width: 20px;
+    height: 20px;
+    background-image: url(../../assets/image/starrate.png);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    cursor: pointer;
+}
+.rating1 .ratefill1 {
+    /* background-color: #ff8; */
+    background-color: orange;
+    width: 0;
+    /* height: 0px; */
+    position: absolute;
+}
+
+.warning_msg {
+    display: none;
+    position: relative;
+    text-align: center;
+    background: #ffffff;
+    line-height: 26px;
+    width: 100%;
+    color: red;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #e0e0e0;
+}
