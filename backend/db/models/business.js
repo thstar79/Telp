@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Business.associate = function(models) {
     Business.belongsTo(models.User, {foreignKey: "userId"});
-    Business.hasMany(models.Review,{foreignKey: "businessId",hooks: true,onDelete: "cascade",});
+    Business.hasMany(models.Review,{foreignKey: "businessId",hooks: true,onDelete: "cascade"});
   };
   return Business;
 };

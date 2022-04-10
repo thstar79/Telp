@@ -69,7 +69,7 @@ const BusinessDetail = () => {
         setCBusiness(business);
         setEditReviewId(null);
         dispatch(getOneBusiness(businessId));
-    }, [cbusiness, dispatch]);
+    }, [cbusiness, user, dispatch]);
 
     if (!business) {
         return null;
@@ -94,7 +94,6 @@ const BusinessDetail = () => {
 
     const editBusiness = async (business) => {
         setEditId(business.id);
-        setName(user.id);
         setDesc(business.description);
         setImage(business.image);
         setAddress(business.address);
@@ -112,7 +111,7 @@ const BusinessDetail = () => {
             <div className="top_business_detail">
                 <div className="top_business_detail_image" style={{backgroundImage: "url(" + business.image + ")"}} />
                 <div>
-                    {editId !== business.id && (
+                    {(business) && editId !== business.id && (
                     <>
                     <div className="business_detail_name">
                         {business.name}

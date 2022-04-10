@@ -20,6 +20,21 @@ const validateLogin = [
 
 const router = express.Router();
 
+router.get("/login/demo", asyncHandler(async(req, res) => {
+    const user = await User.scope('currentUser').findByPk(1);
+    if(!user) {
+        const err = new Error('Login failed');
+        err.status = 401;
+        err.title = 'Login failed';
+        err.errors = ['The provided credentials were invalid.'];
+        return next(err);
+    }
+    await setTokenCookie(res, user);
+
+    return res.json({
+        user
+    });
+}));
 
 router.get('/',restoreUser, (req,res)=>{
     const {user} = req;

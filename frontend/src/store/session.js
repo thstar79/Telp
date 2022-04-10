@@ -44,6 +44,7 @@ export const signup = (user) => async (dispatch) => {
             zip_code
         }),
     });
+    console.log("여기는 들어오나");
     const data = await response.json();
     dispatch(setUser(data.user));
     return response;
@@ -76,7 +77,7 @@ const sessionReducer = (state=initialState, action) => {
             return newState;
         case REMOVE_USER:
             newState = Object.assign({},state);
-            newState.user = null;
+            newState.user = undefined;
             return newState;
         default:
             return state;
