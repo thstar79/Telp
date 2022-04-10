@@ -38,7 +38,6 @@ const BusinessHome = ()=>{
     }
 
     useEffect(()=>{
-      setCBusiness(cbusiness);
       dispatch(getBusiness());
       dispatch(loadReviews());
     },[cbusiness,dispatch])
