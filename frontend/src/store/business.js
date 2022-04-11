@@ -1,5 +1,5 @@
 import {csrfFetch} from './csrf';
-import {LOAD_REVIEWS,REMOVE_REVIEW,ADD_REVIEW} from "./reviews";
+import {LOAD_REVIEWS,ADD_REVIEW} from "./reviews";
 
 const SET_BUSINESS = 'business/setBusiness';
 const REMOVE_BUSINESS = 'business/removeBusiness';
@@ -25,13 +25,13 @@ const load = (list) => ({
 
 const initialState = {list: []};
 
-const sortList = (list) => {
-    return list
-      .sort((businessA, businessB) => {
-        return businessA.zip_code - businessB.zip_code;
-      })
-      .map((business) => business.id);
-  };
+// const sortList = (list) => {
+//     return list
+//       .sort((businessA, businessB) => {
+//         return businessA.zip_code - businessB.zip_code;
+//       })
+//       .map((business) => business.id);
+//   };
   
 export const editDBBusiness = (business, flag=1) => async (dispatch) => {
     const {name,description,image,address,city,state,zip_code,lat,lng,userId} = business;
