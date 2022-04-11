@@ -96,7 +96,6 @@ const BusinessDetail = () => {
             setEditId(-1);
           })
           .catch(async (res) => {
-              console.log("catch에 잡히면 그래도 고칠만 한데....");
             const data = await res.json();
             console.log(data.errors);
             if (data && data.errors) setErrors(data.errors);

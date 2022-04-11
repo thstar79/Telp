@@ -6,6 +6,18 @@ const {Review} = require('../../db/models');
 const { check } =require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+const reviewValidator = [
+    check("rating")
+    .exists({checkFalsy: true})
+    .withMessage("Please provide a name for the business"),
+    check("contents")
+    .exists({checkFalsy: true})
+    .withMessage("Please provide a description for the business")
+    .isLength({max:500})
+    .withMessage("Reviews should be no more than 500 characters"),
+    handleValidationErrors
+];
+
 const businessValidator = [
     check("name")
     .exists({checkFalsy: true})
@@ -124,7 +136,7 @@ router.get('/:id(\\d+)/reviews', asyncHandler(async (req,res)=>{
     });
 }));
 
-router.post('/:id(\\d+)/reviews',asyncHandler(async (req,res)=>{
+router.post('/:id(\\d+)/reviews',reviewValidator,asyncHandler(async (req,res)=>{
     const businessId = parseInt(req.params.id,10);
     const {rating,contents,userId} = req.body;
     const review = await Review.create({

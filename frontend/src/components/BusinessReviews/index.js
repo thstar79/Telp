@@ -12,6 +12,7 @@ const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
     const [reviewId, setReviewId] = useState();
     const [editId, setEditId] = useState(-1);
     const [isSubmit, setIsSubmit] = useState(false);
+    const [errors, setErrors] = useState([]);
 
     const user = useSelector((state)=>state.session.user);
     let reviews = useSelector((state)=>{
@@ -74,7 +75,7 @@ const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
     
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        setIsSubmit(true);
+        // setIsSubmit(true);
         const payload = {
             id: reviewId,
             rating,
@@ -82,8 +83,19 @@ const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
             userId:user.id,
             businessId: business.id,
         };
-        await dispatch(editDBReview(payload));
-        setEditId(-1);
+        setErrors([]);
+        return await dispatch(editDBReview(payload))
+                .then(()=>{
+                    setIsSubmit(true);
+                    setErrors([]);
+                    setEditId(-1);
+                })
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors);
+                    setIsSubmit(false);
+                });
+        // setEditId(-1);
     }
 
     const editReview = async (review) => {
@@ -99,6 +111,9 @@ const BusinessReviews = ({business,rating,setRating,setRate,showMessage}) => {
 
     return reviews.map((review)=>(
         <div key={review.id} className="reviewUnit">
+            <ul>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
             {(editId !== review.id) && (
             <>
                 <div className='profile'>

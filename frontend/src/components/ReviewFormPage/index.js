@@ -39,22 +39,48 @@ function ReviewFormPage({reviewId,business,rating,setRating,setRate,showMessage}
             showMessage('review');
             return;
         }
-        
+        console.log("이건 좀 아닌 것 같은데.. 희망이 있다. 1111");
         let returnedReview;
         if(reviewId) {
-            returnedReview = await dispatch(editDBReview(payload));
+            returnedReview = dispatch(editDBReview(payload))
+                                    .then(()=>{
+                                        setErrors([]);
+                                        setRate(0);
+                                        document.querySelector('.review_textarea').value = '';
+                                    })
+                                    .catch(async (res) => {
+                                        console.log("여기엔 희망이 있다. ");
+                                        const data = await res.json();
+                                        if (data && data.errors) setErrors(data.errors);
+                                    });
         }
         else{
             payload.businessId = businessId;
-            returnedReview = await dispatch(editDBReview(payload, 0));
+            returnedReview = dispatch(editDBReview(payload, 0))
+                                    .then(()=>{
+                                        setErrors([]);
+                                        setRate(0);
+                                        document.querySelector('.review_textarea').value = '';
+                                    })
+                                    .catch(async (res) => {
+                                        console.log("여기엔 희망이 있다. 111");
+                                        const data = await res.json();
+                                        console.log(data);
+                                        console.log(data.errors);
+                                        if (data && data.errors) setErrors(data.errors);
+                                    });
         }
-        setRate(0);
-        document.querySelector('.review_textarea').value = '';;
+        // setRate(0);
+        // document.querySelector('.review_textarea').value = '';
+        return returnedReview;
     }
 
     return (
     <div>
         <form name="reviewform" className="reviewform" onSubmit={handleSubmit}>
+            <ul>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
             <input type="hidden" name="rate" id="rate" value="0"/>
             <p className="title_star">Please share your review</p>
             <StarRating rating={rating} setRating={setRating} setRate={setRate} />
