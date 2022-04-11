@@ -39,7 +39,6 @@ function ReviewFormPage({reviewId,business,rating,setRating,setRate,showMessage}
             showMessage('review');
             return;
         }
-        console.log("이건 좀 아닌 것 같은데.. 희망이 있다. 1111");
         let returnedReview;
         if(reviewId) {
             returnedReview = dispatch(editDBReview(payload))
@@ -49,7 +48,6 @@ function ReviewFormPage({reviewId,business,rating,setRating,setRate,showMessage}
                                         document.querySelector('.review_textarea').value = '';
                                     })
                                     .catch(async (res) => {
-                                        console.log("여기엔 희망이 있다. ");
                                         const data = await res.json();
                                         if (data && data.errors) setErrors(data.errors);
                                     });
@@ -63,10 +61,7 @@ function ReviewFormPage({reviewId,business,rating,setRating,setRate,showMessage}
                                         document.querySelector('.review_textarea').value = '';
                                     })
                                     .catch(async (res) => {
-                                        console.log("여기엔 희망이 있다. 111");
                                         const data = await res.json();
-                                        console.log(data);
-                                        console.log(data.errors);
                                         if (data && data.errors) setErrors(data.errors);
                                     });
         }

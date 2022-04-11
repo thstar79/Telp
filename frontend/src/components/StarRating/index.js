@@ -6,7 +6,6 @@ function StarRating({rating, setRating,setRate}) {
         if(elem.classList.contains('rate_radio')){
             setRate(parseInt(elem.value));
         }
-        console.log("handle star clicked");
     }
 
     return (

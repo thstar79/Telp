@@ -12,7 +12,7 @@ const reviewValidator = [
     check("contents")
     .exists({checkFalsy: true})
     .withMessage("Please provide a description for the business")
-    .isLength({max:10})
+    .isLength({max:500})
     .withMessage("Reviews should be no more than 500 characters"),
     handleValidationErrors
 ];
@@ -21,8 +21,6 @@ router.get('/', async(req,res)=>{
     const reviews = await Review.findAll({
         include: [User,Business],
     });
-    console.log(reviews[0].User);
-    console.log(reviews[0]);
     res.json({reviews});
 });
 
@@ -37,7 +35,6 @@ router.post('/',reviewValidator,asyncHandler(async (req,res,next)=>{
     });
     
     const result = await review.save();
-    console.log(result,"!!!!!!!!!!!!!!!!!!");
     return res.json(result);
     // const validatorErrors = validationResult(req);
     // if(validatorErrors.isEmpty()) {
@@ -52,7 +49,6 @@ router.post('/',reviewValidator,asyncHandler(async (req,res,next)=>{
 router.delete('/:id(\\d+)', async(req, res) => {
     const id = parseInt(req.params.id,10);
     const review = await Review.findByPk(id);
-    console.log("I am in delete review",id);
     if(review){
         await review.destroy();
         return res.json({message: "success"});
@@ -64,7 +60,6 @@ router.delete('/:id(\\d+)', async(req, res) => {
 });
 
 router.put('/:id(\\d+)', reviewValidator, async(req,res)=>{
-    console.log(req.cookies);
     const id = parseInt(req.params.id,10);
     const review = await Review.findByPk(id);
 

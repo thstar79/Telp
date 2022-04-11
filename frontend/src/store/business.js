@@ -41,7 +41,6 @@ export const editDBBusiness = (business, flag=1) => async (dispatch) => {
         method = "PATCH";
         url = `/api/business/${business.id}`;
     }
-    console.log(url);
     const response = await csrfFetch(url,{
         method,
         headers: {"Content-Type": "application/json"},
@@ -130,7 +129,6 @@ const businessReducer = (state=initialState, action) => {
             return newState;
         case LOAD:
             const allBusiness = {};
-            console.log("ACTIOn ", action.list.businesses);
             action.list.businesses.forEach((business)=>{
                 allBusiness[business.id] = business;
             });
@@ -141,7 +139,6 @@ const businessReducer = (state=initialState, action) => {
                 [action.businessId]: {
                     ...state[action.businessId],
                     reviews: action.reviews.map((review)=>{
-                        console.log(review);
                         return review.id
                     }),
                 },

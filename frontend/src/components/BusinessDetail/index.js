@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams,useHistory } from "react-router-dom";
+import { useParams,useHistory, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getOneBusiness,editDBBusiness,delDBBusiness } from "../../store/business";
 import ReviewFormPage from "../ReviewFormPage";
@@ -10,7 +10,6 @@ const BusinessDetail = () => {
   
     const user = useSelector((state)=>state.session.user);
     const { businessId } = useParams();
-    console.log("Business Detail", businessId);
     const dispatch = useDispatch();
     const history = useHistory();
     const business = useSelector((state) => state.business[businessId]);
@@ -30,6 +29,7 @@ const BusinessDetail = () => {
     const [editId, setEditId] = useState(-1);
     const [errors, setErrors] = useState([]);
     const [isSubmit, setIsSubmit] = useState(false);
+    const [isDelete, setIsDelete] = useState(false);
 
     const updateName = (e)=>setName(e.target.value);
     const updateDesc = (e)=>setDesc(e.target.value);
@@ -97,11 +97,12 @@ const BusinessDetail = () => {
           })
           .catch(async (res) => {
             const data = await res.json();
-            console.log(data.errors);
             if (data && data.errors) setErrors(data.errors);
             setIsSubmit(false);
           });
     }
+
+    if(isDelete)    return <Redirect to="/business" />;
 
     const editBusiness = async (business) => {
         setEditId(business.id);
@@ -114,7 +115,8 @@ const BusinessDetail = () => {
     }
     const deleteBusiness = async (business) => {
         dispatch(delDBBusiness(business));
-        history.push('/business');
+        setIsDelete(true);
+        // history.push('/business');
     }
 
     let comInfo = (

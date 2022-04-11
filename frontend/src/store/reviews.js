@@ -6,7 +6,6 @@ export const REMOVE_REVIEW = "reviews/REMOVE_REVIEW";
 export const ADD_REVIEW = "reviews/ADD_REVIEW";
 
 const load = (reviews, businessId = -1) => {
-    console.log("22222222222222222222222222222222222222");
     return ({
         type: LOAD_REVIEWS,
         reviews,
@@ -41,12 +40,9 @@ export const loadReviews = () => async (dispatch) => {
 
 
 export const getAllReviews = (id) => async (dispatch) => {
-    console.log("GET ALL REVIVEWSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",id);
     const res = await fetch(`/api/business/${id}/reviews`);
     if(res.ok) {
         const {reviews} = await res.json();
-        console.log("REVIEW 입니다.",reviews);
-        console.log("111111111111111111111111111111111111111111");
         dispatch(load(reviews,id));
         return reviews; 
     }
@@ -58,11 +54,6 @@ export const getAllReviews = (id) => async (dispatch) => {
 }
 
 export const editDBReview = (payload, flag=1)=> async (dispatch) =>{
-    console.log("===============================================================================");
-    console.log("===============================================================================");
-    console.log("===============================================================================");
-    console.log("===============================================================================");
-    console.log("===============================================================================");
     let method="POST";
     let url = `/api/business/${payload.businessId}/reviews`;
     if(flag === 1){
@@ -70,17 +61,15 @@ export const editDBReview = (payload, flag=1)=> async (dispatch) =>{
         method="PUT";
     }
 
-    console.log("FLAG: ", payload);
     const res = await csrfFetch(url, {
         method,
         headers: { "Content-Type": "application/json"},
         body: JSON.stringify(payload),
     });
-    console.log(res);
+
     if(res.ok) {
         const review = await res.json();
         //const {review} = temp;
-        console.log("REVIEW : ", review);
         dispatch(update(review));
         return review;
     }
@@ -111,7 +100,6 @@ const reviewsReducer = (state=initialState,action) => {
     switch(action.type){
         case LOAD_REVIEWS:
             const newReviews = {};
-            console.log(action);
             action.reviews.forEach((review)=>{
                 newReviews[review.id] = review;
             });
@@ -122,7 +110,6 @@ const reviewsReducer = (state=initialState,action) => {
             delete newState[action.reviewId];
             return newState;
         case UPDATE_REVIEW:
-            console.log(action);
             return {...state, [action.review.id]: action.review}
         default:
             return state;
