@@ -30,7 +30,6 @@ module.exports = (sequelize, DataTypes) => {
     return await Business.findByPk(business.id);
   }
   
-
   Business.associate = function(models) {
     Business.belongsTo(models.User, {foreignKey: "userId"});
     Business.hasMany(models.Review,{foreignKey: "businessId",hooks: true,onDelete: "cascade"});
