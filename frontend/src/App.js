@@ -9,6 +9,7 @@ import Navigation from "./components/Navigation";
 import BusinessSignupFormPage from "./components/BusinessSignUpFormPage";
 import BusinessHome from "./components/BusinessHome";
 import BusinessDetail from "./components/BusinessDetail";
+import MainRight from "./components/MainRight";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,7 +49,9 @@ function App() {
             </Route>
           </Switch>
         </div>
-        <div className='main-right'></div>
+        <div className='main-right'>
+          <MainRight />
+        </div>
       </div>
     )}
     </>
