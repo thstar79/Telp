@@ -1,4 +1,4 @@
-function MainRight(){
+function Main3(){
     return (
         <div>
           <a className="dev-link" href='https://github.com/thstar79/'>Developer</a>
@@ -6,4 +6,4 @@ function MainRight(){
       );
 }
 
-export default MainRight;
+export default Main3;

@@ -1,5 +1,5 @@
-import Navigation from '../Navigation';
-import SearchBar from '../SearchBar';
+import Navigation from './Navigation';
+import SearchBar from './SearchBar';
 import './Top.css';
 
 function Top({isLoaded}){

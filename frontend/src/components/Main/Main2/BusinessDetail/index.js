@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams,useHistory, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getOneBusiness,editDBBusiness,delDBBusiness } from "../../store/business";
+import { getOneBusiness,editDBBusiness,delDBBusiness } from "../../../../store/business";
 import ReviewFormPage from "../ReviewFormPage";
 import BusinessReviews from "../BusinessReviews";
 import './BusinessDetail.css';

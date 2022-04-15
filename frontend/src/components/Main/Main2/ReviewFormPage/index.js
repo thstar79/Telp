@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { useParams, useHistory,Link } from "react-router-dom";
-import { getAllReviews,editDBReview } from "../../store/reviews";
+import { getAllReviews,editDBReview } from "../../../../store/reviews";
 import StarRating from "../StarRating";
 import './ReviewFormPage.css';
 

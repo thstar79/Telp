@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { NavLink, Route, useParams } from 'react-router-dom';
-import {getBusiness} from '../../store/business';
-import { loadReviews } from '../../store/reviews';
+import { getBusiness } from '../../../../store/business';
+import { loadReviews } from '../../../../store/reviews';
 import BusinessSummary from '../BusinessSummary';
 
 const BusinessHome = ()=>{

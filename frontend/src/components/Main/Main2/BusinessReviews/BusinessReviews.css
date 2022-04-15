@@ -93,7 +93,7 @@ button {
     z-index: 10;
     width: 20px;
     height: 20px;
-    background-image: url(../../assets/image/starrate.png);
+    background-image: url(./starrate.png);
     background-repeat: no-repeat;
     background-size: 20px 20px;
     cursor: pointer;

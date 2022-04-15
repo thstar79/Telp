@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 //import * as sessionActions from "../../store/session";
-import * as businessActions from "../../store/business";
+import * as businessActions from "../../../../store/business";
 
 function BusinessSignupFormPage() {
   const dispatch = useDispatch();

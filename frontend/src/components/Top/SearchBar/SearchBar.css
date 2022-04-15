@@ -13,13 +13,24 @@
 }
 
 .search_bar{
-    height: 100px;
+    height: 200px;
+    display:flex;
+    flex-direction: row;
 }
 
 .search_bar > .search_box{
     width:400px;
     height:50px;
 }
+
+form .search_bar > div {
+    height:70px;
+}
+
+form .search_bar > div button {
+    height:55px;
+}
+
 .extra{
     height:50px;
 }

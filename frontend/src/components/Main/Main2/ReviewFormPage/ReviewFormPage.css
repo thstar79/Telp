@@ -54,7 +54,7 @@ h1{
     z-index: 10;
     width: 30px;
     height: 30px;
-    background-image: url(../../assets/image/starrate.png);
+    background-image: url("./starrate.png");
     background-repeat: no-repeat;
     background-size: 30px 30px;
     cursor: pointer;

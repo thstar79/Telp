@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {delDBReview, editDBReview, getAllReviews} from "../../store/reviews";
+import {delDBReview, editDBReview, getAllReviews} from "../../../../store/reviews";
 import StarRating from "../StarRating";
 import DisplayStars from "../DisplayStars";
 import './BusinessReviews.css';
