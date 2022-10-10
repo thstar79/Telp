@@ -2,7 +2,7 @@
 
 <h5 align="center">  By: <a href="https://github.com/thstar79">Taehoon Kim</a> - <a href="https://telp-app.herokuapp.com/"><i>Live site</i></h5>
 
-### Table of Contents
+### Table of Contents1
 - [We value your Input](#stories)
 - [Comments](#comments)
 - [Coins](#coins)
